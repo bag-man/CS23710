@@ -3,7 +3,7 @@
 #include <string.h>
 #include "definitions.h"
 
-#define NUM_COMPETITORS 1
+#define NUM_COMPETITORS 3
 
 struct competitor times[NUM_COMPETITORS];
 
@@ -43,14 +43,13 @@ int main() {
     times[i].rT = seconds_to_time(rH + rM + rS);
     strcpy(times[i].name, name);
     times[i].number = i;
-
+ 
     printf("%s has a total time of %dH %dM %dS.\n", times[i].name, times[i].tT.hours, times[i].tT.minutes, times[i].tT.seconds);
   }
 
-  printf("\nNAME \tcompetitor \tcycle time \tswim time \trun time \ttotal time\n");
-  for(int i = 0; i < NUM_COMPETITORS; i++) {
-    print_competitor(times[i]);
-  }
+  print_competitors();
+  insertSort(times);
+  print_competitors();
 
   return 0;
 }
@@ -63,6 +62,15 @@ struct time seconds_to_time(int totalTime) {
   return humanTime;
 }
 
+void print_competitors() {
+  printf("\nNAME \tcompetitor \tcycle time \tswim time \trun time \ttotal time\n");
+  printf("=====================================================================================\n");
+  for(int i = 0; i < NUM_COMPETITORS; i++) {
+    print_competitor(times[i]);
+  }
+
+}
+
 void print_competitor(struct competitor comp) {
   printf("%s\t  %8d\t  %dH %dM %dS\t %dH %dM %dS\t %dH %dM %dS\t %dH %dM %dS\n", comp.name, comp.number,
     comp.cT.hours, comp.cT.minutes, comp.cT.seconds,
@@ -70,4 +78,15 @@ void print_competitor(struct competitor comp) {
     comp.rT.hours, comp.rT.minutes, comp.rT.seconds,
     comp.tT.hours, comp.tT.minutes, comp.tT.seconds
   );
+}
+
+void insertSort(struct competitor a[]) {
+  int i, j;
+  struct competitor index;
+  for (i = 1; i < NUM_COMPETITORS; ++i) {
+    index = a[i];
+    for (j = i; j > 0 && a[j-1].tT_in_seconds > index.tT_in_seconds; j--)
+      a[j] = a[j-1];
+    a[j] = index;
+  }
 }

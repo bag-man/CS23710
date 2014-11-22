@@ -12,34 +12,56 @@
 
 typedef struct {
     /* commands */
-    int cetacean_file;
-    int observer_locations_file;
+    int create;
+    int mine;
+    int move;
+    int remove;
+    int set;
+    int ship;
+    int shoot;
+    /* arguments */
+    char *name;
+    char *x;
+    char *y;
     /* options without arguments */
+    int drifting;
     int help;
+    int moored;
     int version;
+    /* options with arguments */
+    char *speed;
     /* special */
     const char *usage_pattern;
     const char *help_message;
 } DocoptArgs;
 
 const char help_message[] =
-"main\n"
+"Naval Fate.\n"
 "\n"
 "Usage:\n"
-"  ./main (observer_locations_file cetacean_file)\n"
-"  ./main --help\n"
-"  ./main --version\n"
+"  naval_fate.py ship create <name>...\n"
+"  naval_fate.py ship <name> move <x> <y> [--speed=<kn>]\n"
+"  naval_fate.py ship shoot <x> <y>\n"
+"  naval_fate.py mine (set|remove) <x> <y> [--moored|--drifting]\n"
+"  naval_fate.py --help\n"
+"  naval_fate.py --version\n"
 "\n"
 "Options:\n"
 "  -h --help     Show this screen.\n"
 "  --version     Show version.\n"
+"  --speed=<kn>  Speed in knots [default: 10].\n"
+"  --moored      Moored (anchored) mine.\n"
+"  --drifting    Drifting mine.\n"
 "";
 
 const char usage_pattern[] =
 "Usage:\n"
-"  ./main (observer_locations_file cetacean_file)\n"
-"  ./main --help\n"
-"  ./main --version";
+"  naval_fate.py ship create <name>...\n"
+"  naval_fate.py ship <name> move <x> <y> [--speed=<kn>]\n"
+"  naval_fate.py ship shoot <x> <y>\n"
+"  naval_fate.py mine (set|remove) <x> <y> [--moored|--drifting]\n"
+"  naval_fate.py --help\n"
+"  naval_fate.py --version";
 
 typedef struct {
     const char *name;
@@ -254,24 +276,48 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
                    !strcmp(option->olong, "--version")) {
             printf("%s\n", version);
             return 1;
+        } else if (!strcmp(option->olong, "--drifting")) {
+            args->drifting = option->value;
         } else if (!strcmp(option->olong, "--help")) {
             args->help = option->value;
+        } else if (!strcmp(option->olong, "--moored")) {
+            args->moored = option->value;
         } else if (!strcmp(option->olong, "--version")) {
             args->version = option->value;
+        } else if (!strcmp(option->olong, "--speed")) {
+            if (option->argument)
+                args->speed = option->argument;
         }
     }
     /* commands */
     for (i=0; i < elements->n_commands; i++) {
         command = &elements->commands[i];
-        if (!strcmp(command->name, "cetacean_file")) {
-            args->cetacean_file = command->value;
-        } else if (!strcmp(command->name, "observer_locations_file")) {
-            args->observer_locations_file = command->value;
+        if (!strcmp(command->name, "create")) {
+            args->create = command->value;
+        } else if (!strcmp(command->name, "mine")) {
+            args->mine = command->value;
+        } else if (!strcmp(command->name, "move")) {
+            args->move = command->value;
+        } else if (!strcmp(command->name, "remove")) {
+            args->remove = command->value;
+        } else if (!strcmp(command->name, "set")) {
+            args->set = command->value;
+        } else if (!strcmp(command->name, "ship")) {
+            args->ship = command->value;
+        } else if (!strcmp(command->name, "shoot")) {
+            args->shoot = command->value;
         }
     }
     /* arguments */
     for (i=0; i < elements->n_arguments; i++) {
         argument = &elements->arguments[i];
+        if (!strcmp(argument->name, "<name>")) {
+            args->name = argument->value;
+        } else if (!strcmp(argument->name, "<x>")) {
+            args->x = argument->value;
+        } else if (!strcmp(argument->name, "<y>")) {
+            args->y = argument->value;
+        }
     }
     return 0;
 }
@@ -283,21 +329,32 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
 
 DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
     DocoptArgs args = {
-        0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, NULL, NULL, NULL, 0, 0, 0, 0, (char*) "10",
         usage_pattern, help_message
     };
     Tokens ts;
     Command commands[] = {
-        {"cetacean_file", 0},
-        {"observer_locations_file", 0}
+        {"create", 0},
+        {"mine", 0},
+        {"move", 0},
+        {"remove", 0},
+        {"set", 0},
+        {"ship", 0},
+        {"shoot", 0}
     };
     Argument arguments[] = {
+        {"<name>", NULL, NULL},
+        {"<x>", NULL, NULL},
+        {"<y>", NULL, NULL}
     };
     Option options[] = {
+        {NULL, "--drifting", 0, 0, NULL},
         {"-h", "--help", 0, 0, NULL},
-        {NULL, "--version", 0, 0, NULL}
+        {NULL, "--moored", 0, 0, NULL},
+        {NULL, "--version", 0, 0, NULL},
+        {NULL, "--speed", 1, 0, NULL}
     };
-    Elements elements = {2, 0, 2, commands, arguments, options};
+    Elements elements = {7, 3, 5, commands, arguments, options};
 
     ts = tokens_new(argc, argv);
     if (parse_args(&ts, &elements))

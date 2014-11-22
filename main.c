@@ -1,3 +1,3 @@
-main() {
-  lalala
+int main(int argc, char *argv[]) {
+
 }

@@ -1,0 +1,8 @@
+AberSeaMammals
+
+Usage:
+  ./main <observer_locations_file> <cetacean_file>
+
+Options:
+  -h --help     Show this screen.
+  --version     Show version.

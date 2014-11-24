@@ -3,8 +3,6 @@
 #include "definitions.h"
 #include "docopt/docopt.c"
 
-struct obersvations_ *observations;
-
 int main(int argc, char *argv[]) {
 
   DocoptArgs args = docopt(argc, argv, 1, "0.1");
@@ -23,38 +21,33 @@ int main(int argc, char *argv[]) {
 }
 
 void read_file(FILE *file, int type) {
-  char c = 0;
-  char word[6] = "XXXXXX"; //Is there a less ugly way of doing this?
+  char c;
   int num_lines = 0;
+  int date[6];
+  struct tm time;
+
+  for(int i=0; i < 6; i++) {
+    c = fscanf(file, "%d", &date[i]); 
+  }
+
+  time.tm_mday = date[0];
+  time.tm_mon  = date[1];
+  time.tm_year = date[2];
+  time.tm_hour = date[3];
+  time.tm_min  = date[4];
+  time.tm_sec  = date[5];
+
+  num_lines++; // Date line
 
   while (c != EOF) {
-    if(type) {
-    } else {
-      int date[6];
-      for(int i=0; i < 6; i++) {
-	c = fscanf(file, "%d", date[i]); 
-	printf("%d\n", date[i]);
-        exit(0);
-      }
-      num_lines++;
-
-      struct observer_ observer;
-      for(int i=0; i < 3; i++) {
-	c = fscanf(file, "%s", observer.user_name); 
-	c = fscanf(file, "%f", observer.angle); 
-	c = fscanf(file, "%f", observer.distance); 
-      }
-      num_lines++;
-      //Malloc and add new observer
+    struct observer_ record;
+    for(int i=0; i < 3; i++) {
+      c = fscanf(file, "%s", record.user_name); 
+      c = fscanf(file, "%lf", &record.latitude); 
+      c = fscanf(file, "%lf", &record.longitude); 
     }
-  } 
-
-  if(type) {
-    num_lines -= 6;
-    num_lines /= 3;
-  } else {
-    num_lines /= 4;
-  }
+    num_lines++;
+  } num_lines++; // Instead of do..while
 
   printf("%d", num_lines);
 

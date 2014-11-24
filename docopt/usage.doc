@@ -6,7 +6,7 @@ Usage:
   ./main --version
 
 Options:
-  --observers	This is the input file for the observers data
   --sightings	This is the input file for the cetacean data
+  --observers	This is the input file for the observers data
   -h --help     Show this screen.
   --version     Show version.

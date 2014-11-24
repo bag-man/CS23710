@@ -31,8 +31,8 @@ const char help_message[] =
 "  ./main --version\n"
 "\n"
 "Options:\n"
-"  --observers	This is the input file for the observers data\n"
 "  --sightings	This is the input file for the cetacean data\n"
+"  --observers	This is the input file for the observers data\n"
 "  -h --help     Show this screen.\n"
 "  --version     Show version.\n"
 "";

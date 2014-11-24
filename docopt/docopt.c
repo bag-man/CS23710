@@ -11,12 +11,12 @@
 
 
 typedef struct {
-    /* commands */
-    int cetacean_file;
-    int observer_locations_file;
     /* options without arguments */
     int help;
     int version;
+    /* options with arguments */
+    char *cetacean;
+    char *observer;
     /* special */
     const char *usage_pattern;
     const char *help_message;
@@ -26,7 +26,7 @@ const char help_message[] =
 "main\n"
 "\n"
 "Usage:\n"
-"  ./main (observer_locations_file cetacean_file)\n"
+"  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>\n"
 "  ./main --help\n"
 "  ./main --version\n"
 "\n"
@@ -37,7 +37,7 @@ const char help_message[] =
 
 const char usage_pattern[] =
 "Usage:\n"
-"  ./main (observer_locations_file cetacean_file)\n"
+"  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>\n"
 "  ./main --help\n"
 "  ./main --version";
 
@@ -258,16 +258,17 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
             args->help = option->value;
         } else if (!strcmp(option->olong, "--version")) {
             args->version = option->value;
+        } else if (!strcmp(option->olong, "--cetacean")) {
+            if (option->argument)
+                args->cetacean = option->argument;
+        } else if (!strcmp(option->olong, "--observer")) {
+            if (option->argument)
+                args->observer = option->argument;
         }
     }
     /* commands */
     for (i=0; i < elements->n_commands; i++) {
         command = &elements->commands[i];
-        if (!strcmp(command->name, "cetacean_file")) {
-            args->cetacean_file = command->value;
-        } else if (!strcmp(command->name, "observer_locations_file")) {
-            args->observer_locations_file = command->value;
-        }
     }
     /* arguments */
     for (i=0; i < elements->n_arguments; i++) {
@@ -283,21 +284,21 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
 
 DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
     DocoptArgs args = {
-        0, 0, 0, 0,
+        0, 0, NULL, NULL,
         usage_pattern, help_message
     };
     Tokens ts;
     Command commands[] = {
-        {"cetacean_file", 0},
-        {"observer_locations_file", 0}
     };
     Argument arguments[] = {
     };
     Option options[] = {
         {"-h", "--help", 0, 0, NULL},
-        {NULL, "--version", 0, 0, NULL}
+        {NULL, "--version", 0, 0, NULL},
+        {NULL, "--cetacean", 1, 0, NULL},
+        {NULL, "--observer", 1, 0, NULL}
     };
-    Elements elements = {2, 0, 2, commands, arguments, options};
+    Elements elements = {0, 0, 4, commands, arguments, options};
 
     ts = tokens_new(argc, argv);
     if (parse_args(&ts, &elements))

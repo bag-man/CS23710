@@ -1,7 +1,7 @@
 main
 
 Usage:
-  ./main (observer_locations_file cetacean_file)
+  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>
   ./main --help
   ./main --version
 

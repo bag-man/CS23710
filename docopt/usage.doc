@@ -1,10 +1,12 @@
 main
 
 Usage:
-  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>
+  ./main --sightings=<cetacean_file> --observers=<observer_locations_file> 
   ./main --help
   ./main --version
 
 Options:
+  --observers	This is the input file for the observers data
+  --sightings	This is the input file for the cetacean data
   -h --help     Show this screen.
   --version     Show version.

@@ -15,8 +15,8 @@ typedef struct {
     int help;
     int version;
     /* options with arguments */
-    char *cetacean;
-    char *observer;
+    char *observers;
+    char *sightings;
     /* special */
     const char *usage_pattern;
     const char *help_message;
@@ -26,18 +26,20 @@ const char help_message[] =
 "main\n"
 "\n"
 "Usage:\n"
-"  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>\n"
+"  ./main --sightings=<cetacean_file> --observers=<observer_locations_file> \n"
 "  ./main --help\n"
 "  ./main --version\n"
 "\n"
 "Options:\n"
+"  --observers	This is the input file for the observers data\n"
+"  --sightings	This is the input file for the cetacean data\n"
 "  -h --help     Show this screen.\n"
 "  --version     Show version.\n"
 "";
 
 const char usage_pattern[] =
 "Usage:\n"
-"  ./main --observer=<observer_locations_file>  --cetacean=<cetacean_file>\n"
+"  ./main --sightings=<cetacean_file> --observers=<observer_locations_file> \n"
 "  ./main --help\n"
 "  ./main --version";
 
@@ -258,12 +260,12 @@ int elems_to_args(Elements *elements, DocoptArgs *args, bool help,
             args->help = option->value;
         } else if (!strcmp(option->olong, "--version")) {
             args->version = option->value;
-        } else if (!strcmp(option->olong, "--cetacean")) {
+        } else if (!strcmp(option->olong, "--observers")) {
             if (option->argument)
-                args->cetacean = option->argument;
-        } else if (!strcmp(option->olong, "--observer")) {
+                args->observers = option->argument;
+        } else if (!strcmp(option->olong, "--sightings")) {
             if (option->argument)
-                args->observer = option->argument;
+                args->sightings = option->argument;
         }
     }
     /* commands */
@@ -295,8 +297,8 @@ DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
     Option options[] = {
         {"-h", "--help", 0, 0, NULL},
         {NULL, "--version", 0, 0, NULL},
-        {NULL, "--cetacean", 1, 0, NULL},
-        {NULL, "--observer", 1, 0, NULL}
+        {NULL, "--observers", 1, 0, NULL},
+        {NULL, "--sightings", 1, 0, NULL}
     };
     Elements elements = {0, 0, 4, commands, arguments, options};
 

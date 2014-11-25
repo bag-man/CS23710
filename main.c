@@ -47,16 +47,15 @@ void read_observations(FILE *file) {
 
   char c = 0;
   while (c != EOF) {
+    conductor->next = malloc(sizeof(struct observer_));  
     c = fscanf(file, "%s", conductor->user_name); 
     c = fscanf(file, "%lf", &conductor->latitude); 
     c = fscanf(file, "%lf", &conductor->longitude); 
-    conductor->next = malloc(sizeof(struct observer_));  
     conductor = conductor->next; 
   } 
-  conductor->next = NULL;
   conductor = root;
 
-  while ( conductor != NULL ) {
+  while ( conductor->next != NULL ) {
       printf("%s", conductor->user_name);
       printf(" %lf", conductor->latitude);
       printf(" %lf\n", conductor->longitude);

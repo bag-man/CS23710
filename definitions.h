@@ -29,4 +29,4 @@ struct sighting_ {
   double distance;
 };
 
-void read_file(FILE *file, int type);
+void read_observations(FILE *file);

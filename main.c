@@ -15,21 +15,21 @@ int main(int argc, char *argv[]) {
   FILE *observers_file = fopen(args.observers, "r");
 
   //read_file(sightings_file, 0);
-  read_file(observers_file, 1);
+  read_observations(observers_file);
 
   return 0;
 }
 
-void read_file(FILE *file, int type) {
-  char c;
-  int num_lines = 0;
+void read_observations(FILE *file) {
+
+  /* Read Date */
   int date[6];
-  struct tm time;
 
   for(int i=0; i < 6; i++) {
-    c = fscanf(file, "%d", &date[i]); 
+    fscanf(file, "%d", &date[i]); 
   }
-
+  
+  struct tm time;
   time.tm_mday = date[0];
   time.tm_mon  = date[1];
   time.tm_year = date[2];
@@ -37,19 +37,31 @@ void read_file(FILE *file, int type) {
   time.tm_min  = date[4];
   time.tm_sec  = date[5];
 
-  num_lines++; // Date line
+  /* Read Records */
+  struct observer_ *root;       
+  struct observer_ *conductor;  
 
+  root = malloc(sizeof(struct observer_));  
+  root->next = 0; 
+  conductor = root;
+
+  char c = 0;
   while (c != EOF) {
-    struct observer_ record;
-    for(int i=0; i < 3; i++) {
-      c = fscanf(file, "%s", record.user_name); 
-      c = fscanf(file, "%lf", &record.latitude); 
-      c = fscanf(file, "%lf", &record.longitude); 
-    }
-    num_lines++;
-  } num_lines++; // Instead of do..while
+    c = fscanf(file, "%s", conductor->user_name); 
+    c = fscanf(file, "%lf", &conductor->latitude); 
+    c = fscanf(file, "%lf", &conductor->longitude); 
+    conductor->next = malloc(sizeof(struct observer_));  
+    conductor = conductor->next; 
+  } 
+  conductor->next = NULL;
+  conductor = root;
 
-  printf("%d", num_lines);
+  while ( conductor != NULL ) {
+      printf("%s", conductor->user_name);
+      printf(" %lf", conductor->latitude);
+      printf(" %lf\n", conductor->longitude);
+      conductor = conductor->next;
+  }
 
   fclose(file);
 }

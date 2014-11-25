@@ -1,16 +1,11 @@
 #include <time.h>
 
 // Observation
-struct observation {
+struct observation_ {
   struct tm time;
-  struct observer_ *obersvers;
+  struct observer_ *observers;
   struct sighting_ *sightings;
-};
-
-// Linked list of observations
-struct observations {
-  struct observation data;
-  struct observations *next;
+  struct observation_ *next;
 };
 
 // Each observer
@@ -23,10 +18,13 @@ struct observer_ {
 
 // Each sighting
 struct sighting_ {
-  struct observer_ observer;
+  //struct observer_ *observer;
+  char name[4];
   char mamal;
   double angle;
   double distance;
+  struct  sighting_ *next;
 };
 
-void read_observations(FILE *file);
+struct observation_ read_observations(FILE *file);
+void read_sightings(FILE *file);

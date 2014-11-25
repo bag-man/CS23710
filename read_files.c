@@ -1,4 +1,5 @@
 void read_sightings(FILE *file) {
+
   struct sighting_ *root;       
   struct sighting_ *conductor;  
 
@@ -6,6 +7,7 @@ void read_sightings(FILE *file) {
   root->next = 0; 
   conductor = root;
   char c = 0;
+
   while (c != EOF) {
     conductor->next = malloc(sizeof(struct sighting_));  
 
@@ -18,6 +20,7 @@ void read_sightings(FILE *file) {
   } 
   conductor = root;
 
+  /* Print for debug */
   while ( conductor->next != NULL ) {
       printf("%s", conductor->name);
       printf(" %c", conductor->mamal);
@@ -25,6 +28,8 @@ void read_sightings(FILE *file) {
       printf(" %lf\n", conductor->distance);
       conductor = conductor->next;
   }
+
+  fclose(file);
 
 }
 
@@ -63,6 +68,7 @@ struct observation_ read_observations(FILE *file) {
   } 
   conductor = root;
 
+  /* Print for debug */
   while ( conductor->next != NULL ) {
       printf("%s", conductor->user_name);
       printf(" %lf", conductor->latitude);

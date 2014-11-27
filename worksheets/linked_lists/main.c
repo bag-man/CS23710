@@ -19,7 +19,7 @@ int main() {
 
   print_list();
   printf("\nFinding book 2\n");
-  print_node(2);
+  print_node(3);
 
   return 0;
 }
@@ -27,13 +27,14 @@ int main() {
 void print_node(long isbn) {
   struct book_ *conductor;
   conductor = root->next;
+
   while (conductor != NULL ) {
-    if(conductor->isbn = isbn){
+    if(conductor->isbn == isbn){
       printf("%s", conductor->title);
       printf(" %s", conductor->author);
       printf(" %ld\n", conductor->isbn);
     }
-    conductor = NULL;
+    conductor = conductor->next; 
   }
 }
 

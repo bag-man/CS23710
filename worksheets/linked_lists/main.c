@@ -19,7 +19,7 @@ int main() {
 
   print_list();
   printf("\nFinding book 2\n");
-  print_node(3);
+  print_node(2);
 
   return 0;
 }

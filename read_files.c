@@ -4,29 +4,33 @@ void read_sightings(FILE *file) {
   struct sighting_ *conductor;  
 
   root = malloc(sizeof(struct sighting_));  
-  root->next = 0; 
+  root->next = NULL; 
   conductor = root;
   char c = 0;
 
   while (c != EOF) {
     conductor->next = malloc(sizeof(struct sighting_));  
-
     /* Need to find and link the name of the observer */
     c = fscanf(file, "%s", conductor->name); 
     c = fscanf(file, "%c", &conductor->mamal); 
     c = fscanf(file, "%lf", &conductor->angle); 
     c = fscanf(file, "%lf", &conductor->distance); 
-    conductor = conductor->next; 
+
+    if(c != EOF) {
+      conductor = conductor->next; 
+    } else { 
+      conductor->next = NULL;
+    }
   } 
   conductor = root;
 
   /* Print for debug */
   while ( conductor->next != NULL ) {
-      printf("%s", conductor->name);
-      printf(" %c", conductor->mamal);
-      printf(" %lf", conductor->angle);
-      printf(" %lf\n", conductor->distance);
-      conductor = conductor->next;
+    printf("%s", conductor->name);
+    printf(" %c", conductor->mamal);
+    printf(" %lf", conductor->angle);
+    printf(" %lf\n", conductor->distance);
+    conductor = conductor->next;
   }
 
   fclose(file);
@@ -55,7 +59,7 @@ struct observation_ read_observations(FILE *file) {
   struct observer_ *conductor;  
 
   root = malloc(sizeof(struct observer_));  
-  root->next = 0; 
+  root->next = NULL; 
   conductor = root;
 
   char c = 0;
@@ -64,16 +68,20 @@ struct observation_ read_observations(FILE *file) {
     c = fscanf(file, "%s", conductor->user_name); 
     c = fscanf(file, "%lf", &conductor->latitude); 
     c = fscanf(file, "%lf", &conductor->longitude); 
-    conductor = conductor->next; 
+    if(c != EOF) {
+      conductor = conductor->next; 
+    } else { 
+      conductor->next = NULL;
+    }
   } 
   conductor = root;
 
   /* Print for debug */
   while ( conductor->next != NULL ) {
-      printf("%s", conductor->user_name);
-      printf(" %lf", conductor->latitude);
-      printf(" %lf\n", conductor->longitude);
-      conductor = conductor->next;
+    printf("%s", conductor->user_name);
+    printf(" %lf", conductor->latitude);
+    printf(" %lf\n", conductor->longitude);
+    conductor = conductor->next;
   }
 
   fclose(file);

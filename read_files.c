@@ -68,17 +68,18 @@ struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
     conductor->next = malloc(sizeof(struct sighting_));  
 
     c = fscanf(file, "%s", name); 
-    struct observer_ cond;
-    cond = root_obs->observers;
+    struct observer_ *cond;
+    cond = root_obs.observers;
 
     while(cond->next != NULL) {
       if(name == cond->user_name) {
-	conductor->observer = *cond;
+	conductor->observer = cond;
 	break;
       } else {
 	cond = cond->next;
       }
     }
+
     c = fscanf(file, " %c", &conductor->mamal); 
     c = fscanf(file, "%lf", &conductor->angle); 
     c = fscanf(file, "%lf", &conductor->distance); 
@@ -93,7 +94,7 @@ struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
 
   /* Print for debug */
   while ( conductor->next != NULL ) {
-    printf("%s", conductor->name);
+    printf("%s", conductor->observer);
     printf(" %c", conductor->mamal);
     printf(" %lf", conductor->angle);
     printf(" %lf\n", conductor->distance);

@@ -5,7 +5,6 @@ struct observation_ {
   struct tm time;
   struct observer_ *observers;
   struct sighting_ *sightings;
-  struct observation_ *next;
 };
 
 // Each observer

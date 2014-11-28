@@ -18,8 +18,7 @@ struct observer_ {
 
 // Each sighting
 struct sighting_ {
-  //struct observer_ *observer;
-  char name[5];
+  struct observer_ *observer;
   char mamal;
   double angle;
   double distance;
@@ -27,4 +26,4 @@ struct sighting_ {
 };
 
 struct observation_ read_observations(FILE *file);
-void read_sightings(FILE *file);
+struct sighting_ read_sightings(FILE *file, struct observation_ root_obs);

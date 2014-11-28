@@ -1,42 +1,3 @@
-void read_sightings(FILE *file) {
-
-  struct sighting_ *root;       
-  struct sighting_ *conductor;  
-
-  root = malloc(sizeof(struct sighting_));  
-  root->next = NULL; 
-  conductor = root;
-  char c = 0;
-
-  while (c != EOF) {
-    conductor->next = malloc(sizeof(struct sighting_));  
-    /* Need to find and link the name of the observer */
-    c = fscanf(file, "%s", conductor->name); 
-    c = fscanf(file, " %c", &conductor->mamal); 
-    c = fscanf(file, "%lf", &conductor->angle); 
-    c = fscanf(file, "%lf", &conductor->distance); 
-
-    if(c != EOF) {
-      conductor = conductor->next; 
-    } else { 
-      conductor->next = NULL;
-    }
-  } 
-  conductor = root;
-
-  /* Print for debug */
-  while ( conductor->next != NULL ) {
-    printf("%s", conductor->name);
-    printf(" %c", conductor->mamal);
-    printf(" %lf", conductor->angle);
-    printf(" %lf\n", conductor->distance);
-    conductor = conductor->next;
-  }
-
-  fclose(file);
-
-}
-
 struct observation_ read_observations(FILE *file) {
 
   /* Read Date */
@@ -91,3 +52,56 @@ struct observation_ read_observations(FILE *file) {
   observation.observers = root;
   return observation; 
 }
+
+struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
+
+  struct sighting_ *root;       
+  struct sighting_ *conductor;  
+
+  root = malloc(sizeof(struct sighting_));  
+  root->next = NULL; 
+  conductor = root;
+  char c = 0;
+  char name[5];
+
+  while (c != EOF) {
+    conductor->next = malloc(sizeof(struct sighting_));  
+
+    c = fscanf(file, "%s", name); 
+    struct observer_ cond;
+    cond = root_obs->observers;
+
+    while(cond->next != NULL) {
+      if(name == cond->user_name) {
+	conductor->observer = *cond;
+	break;
+      } else {
+	cond = cond->next;
+      }
+    }
+    c = fscanf(file, " %c", &conductor->mamal); 
+    c = fscanf(file, "%lf", &conductor->angle); 
+    c = fscanf(file, "%lf", &conductor->distance); 
+
+    if(c != EOF) {
+      conductor = conductor->next; 
+    } else { 
+      conductor->next = NULL;
+    }
+  } 
+  conductor = root;
+
+  /* Print for debug */
+  while ( conductor->next != NULL ) {
+    printf("%s", conductor->name);
+    printf(" %c", conductor->mamal);
+    printf(" %lf", conductor->angle);
+    printf(" %lf\n", conductor->distance);
+    conductor = conductor->next;
+  }
+
+  fclose(file);
+  return *root;
+
+}
+

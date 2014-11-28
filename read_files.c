@@ -94,7 +94,7 @@ struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
 
   /* Print for debug */
   while ( conductor->next != NULL ) {
-    printf("%s", conductor->observer);
+    printf("%s", conductor->observer->user_name); // Do stuff here
     printf(" %c", conductor->mamal);
     printf(" %lf", conductor->angle);
     printf(" %lf\n", conductor->distance);

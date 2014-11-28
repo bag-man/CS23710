@@ -15,7 +15,7 @@ int main(int argc, char *argv[]) {
   struct observation_ root_observation;
   
   FILE *sightings_file = fopen(args.sightings, "r");
-  FILE *observers_file = fopen(argS.OBSERVErs, "r");
+  FILE *observers_file = fopen(args.observers, "r");
 
   root_observation = read_observations(observers_file);
   read_sightings(sightings_file, root_observation);

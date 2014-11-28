@@ -15,8 +15,8 @@ int main(int argc, char *argv[]) {
   FILE *sightings_file = fopen(args.sightings, "r");
   FILE *observers_file = fopen(args.observers, "r");
 
-  read_sightings(sightings_file);
   read_observations(observers_file);
+  read_sightings(sightings_file);
 
   return 0;
 }

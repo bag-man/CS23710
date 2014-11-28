@@ -67,7 +67,7 @@ struct observation_ read_observations(FILE *file) {
     conductor->next = malloc(sizeof(struct observer_));  
     c = fscanf(file, " %s", conductor->user_name); 
     c = fscanf(file, " %lf", &conductor->latitude); 
-    c = fscanf(file, " %lf", &conductor->longitude); 
+    c = fscanf(file, " %lf ", &conductor->longitude); 
     if(c != EOF) {
       conductor = conductor->next; 
     } else { 

@@ -13,8 +13,8 @@ void read_sightings(FILE *file) {
     /* Need to find and link the name of the observer */
     c = fscanf(file, "%s", conductor->name); 
     c = fscanf(file, " %c", &conductor->mamal); 
-    c = fscanf(file, " %lf", &conductor->angle); 
-    c = fscanf(file, " %lf", &conductor->distance); 
+    c = fscanf(file, "%lf", &conductor->angle); 
+    c = fscanf(file, "%lf", &conductor->distance); 
 
     if(c != EOF) {
       conductor = conductor->next; 
@@ -65,9 +65,9 @@ struct observation_ read_observations(FILE *file) {
   char c = 0;
   while (c != EOF) {
     conductor->next = malloc(sizeof(struct observer_));  
-    c = fscanf(file, " %s", conductor->user_name); 
-    c = fscanf(file, " %lf", &conductor->latitude); 
-    c = fscanf(file, " %lf ", &conductor->longitude); 
+    c = fscanf(file, "%s", conductor->user_name); 
+    c = fscanf(file, "%lf", &conductor->latitude); 
+    c = fscanf(file, "%lf", &conductor->longitude); 
     if(c != EOF) {
       conductor = conductor->next; 
     } else { 

@@ -10,7 +10,7 @@ struct observation_ {
 
 // Each observer
 struct observer_ {
-  char user_name[4];
+  char user_name[5];
   double latitude;
   double longitude;
   struct observer_ *next; // Linked list?
@@ -19,7 +19,7 @@ struct observer_ {
 // Each sighting
 struct sighting_ {
   //struct observer_ *observer;
-  char name[4];
+  char name[5];
   char mamal;
   double angle;
   double distance;

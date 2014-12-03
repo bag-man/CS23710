@@ -27,7 +27,7 @@ int main(int argc, char *argv[]) {
   Sighting *conductor;
   conductor = root_observation->sightings;
 
-  printf("%d-%d-%d %d:%d:%d\n", 
+  printf("%d-%d-%d %d:%d:%.2d\n", 
     root_observation->time.tm_mday,
     root_observation->time.tm_mon,
     root_observation->time.tm_year,

@@ -28,9 +28,9 @@ Observation * read_observations(FILE *file) {
   char c = 0;
   while (c != EOF) {
     conductor->next = malloc(sizeof(Observer));  
-    c = fscanf(file, "%s", conductor->user_name); 
-    c = fscanf(file, "%lf", &conductor->latitude); 
-    c = fscanf(file, "%lf", &conductor->longitude); 
+    c = fscanf(file, "%s", conductor->id); 
+    c = fscanf(file, "%lf", &conductor->olat); 
+    c = fscanf(file, "%lf", &conductor->olong); 
     if(c != EOF) {
       conductor = conductor->next; 
     } else { 
@@ -65,7 +65,7 @@ Sighting * observation_read_sightings(FILE *file, Observation *root_obs) {
     cond = root_obs->observers;
 
     while(cond->next != NULL) {
-      if(!strcmp(name, cond->user_name)) {
+      if(!strcmp(name, cond->id)) {
 	conductor->observer = cond;
 	break;
       } else {
@@ -73,9 +73,9 @@ Sighting * observation_read_sightings(FILE *file, Observation *root_obs) {
       }
     }
 
-    c = fscanf(file, " %c", &conductor->mamal); 
-    c = fscanf(file, "%lf", &conductor->angle); 
-    c = fscanf(file, "%lf", &conductor->distance); 
+    c = fscanf(file, " %c", &conductor->type); 
+    c = fscanf(file, "%lf", &conductor->bearing); 
+    c = fscanf(file, "%lf", &conductor->range); 
 
     if(c != EOF) {
       conductor = conductor->next; 

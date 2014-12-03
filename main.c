@@ -27,17 +27,23 @@ int main(int argc, char *argv[]) {
   Sighting *conductor;
   conductor = root_observation->sightings;
 
-  printf("UID\t OLAT\t OLONG\t Type\t BGR\t Range\t CMLAT\t CMLONG\n");
+  printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while ( conductor->next != NULL ) {
-    printf("%s\t", conductor->observer->user_name);
-    printf(" %.3lf\t", conductor->observer->latitude);
-    printf(" %.3lf\t", conductor->observer->longitude);
-    printf(" %c\t", conductor->mamal);
-    printf(" %.1lf\t", conductor->angle);
-    printf(" %.3lf\t", conductor->distance);
     find_position(conductor);
+    print_sighting(conductor);
     conductor = conductor->next;
   }
 
   return 0;
+}
+
+void print_sighting(Sighting *conductor) {
+ printf("%s\t", conductor->observer->id);
+ printf(" %.3lf\t", conductor->observer->olat);
+ printf(" %.3lf\t", conductor->observer->olong);
+ printf(" %c\t", conductor->type);
+ printf(" %.1lf\t", conductor->bearing);
+ printf(" %.3lf\t", conductor->range);
+ printf(" %.3lf\t", conductor->cmlat);
+ printf(" %.3lf\n", conductor->cmlong);
 }

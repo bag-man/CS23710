@@ -1,17 +1,19 @@
 #include <time.h>
 
 typedef struct Observer {
-  char user_name[5];
-  double latitude;
-  double longitude;
+  char id[5];
+  double olat;
+  double olong;
   struct Observer *next; 
 } Observer;
 
 typedef struct Sighting {
   Observer *observer;
-  char mamal;
-  double angle;
-  double distance;
+  char type;
+  double bearing;
+  double range;
+  double cmlat;
+  double cmlong;
   struct Sighting *next;
 } Sighting;
 
@@ -24,3 +26,4 @@ typedef struct {
 
 Observation * read_observations(FILE *file);
 Sighting * observation_read_signting(Observation *observation, FILE file);
+void print_sighting(Sighting *conductor);

@@ -9,7 +9,7 @@ Observation * read_observations(FILE *file) {
     fscanf(file, "%d", &date[i]); 
   }
   
-  tm time;
+  struct tm time;
   time.tm_mday = date[0];
   time.tm_mon  = date[1];
   time.tm_year = date[2];

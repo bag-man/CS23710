@@ -1,28 +1,27 @@
 #include <time.h>
 
-// Observation
-struct observation_ {
-  struct tm time;
-  struct observer_ *observers;
-  struct sighting_ *sightings;
-};
-
-// Each observer
-struct observer_ {
+typedef struct Observer {
   char user_name[5];
   double latitude;
   double longitude;
-  struct observer_ *next; // Linked list?
-};
+  struct Observer *next; 
+} Observer;
 
-// Each sighting
-struct sighting_ {
-  struct observer_ *observer;
+typedef struct Sighting {
+  Observer *observer;
   char mamal;
   double angle;
   double distance;
-  struct  sighting_ *next;
-};
+  struct Sighting *next;
+} Sighting;
 
-struct observation_ * read_observations(FILE *file);
-struct sighting_ * read_sightings(FILE *file, struct observation_ *root_obs);
+
+typedef struct {
+  struct tm time;
+  Observer *observers;
+  Sighting *sightings;
+} Observation;
+
+
+Observation * read_observations(FILE *file);
+Sighting * read_sightings(FILE *file, Observation *root_obs);

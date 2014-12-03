@@ -1,5 +1,5 @@
 #include <math.h>
-void find_position(struct sighting_ *sighting) {
+void find_position(Sighting *sighting) {
   double longitude, latitude;
   latitude = sighting->observer->latitude + (sighting->distance * cos(sighting->angle)) / 60.0;
   longitude = sighting->observer->longitude + (sighting->distance * sin(sighting->angle) / cos(sighting->observer->latitude)) / 60.0;

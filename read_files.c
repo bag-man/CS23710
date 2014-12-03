@@ -1,6 +1,6 @@
 #define DATEVARS 6
 
-struct observation_ * read_observations(FILE *file) {
+Observation * read_observations(FILE *file) {
 
   /* Read Date */
   int date[DATEVARS];
@@ -9,7 +9,7 @@ struct observation_ * read_observations(FILE *file) {
     fscanf(file, "%d", &date[i]); 
   }
   
-  struct tm time;
+  tm time;
   time.tm_mday = date[0];
   time.tm_mon  = date[1];
   time.tm_year = date[2];
@@ -18,16 +18,16 @@ struct observation_ * read_observations(FILE *file) {
   time.tm_sec  = date[5];
 
   /* Read Records */
-  struct observer_ *root;       
-  struct observer_ *conductor;  
+  Observer *root;       
+  Observer *conductor;  
 
-  root = malloc(sizeof(struct observer_));  
+  root = malloc(sizeof(Observer));  
   root->next = NULL; 
   conductor = root;
 
   char c = 0;
   while (c != EOF) {
-    conductor->next = malloc(sizeof(struct observer_));  
+    conductor->next = malloc(sizeof(Observer));  
     c = fscanf(file, "%s", conductor->user_name); 
     c = fscanf(file, "%lf", &conductor->latitude); 
     c = fscanf(file, "%lf", &conductor->longitude); 
@@ -39,29 +39,29 @@ struct observation_ * read_observations(FILE *file) {
   } 
   conductor = root;
 
-  struct observation_ *observation;
-  observation = malloc(sizeof(struct observation_));  
+  Observation *observation;
+  observation = malloc(sizeof(Observation));  
   observation->time = time; 
   observation->observers = root;
   return observation; 
 }
 
-struct sighting_ * read_sightings(FILE *file, struct observation_ *root_obs) {
+Sighting * read_sightings(FILE *file, Observation *root_obs) {
 
-  struct sighting_ *root;       
-  struct sighting_ *conductor;  
+  Sighting *root;       
+  Sighting *conductor;  
 
-  root = malloc(sizeof(struct sighting_));  
+  root = malloc(sizeof(Sighting));  
   root->next = NULL; 
   conductor = root;
   char c = 0;
   char name[5];
 
   while (c != EOF) {
-    conductor->next = malloc(sizeof(struct sighting_));  
+    conductor->next = malloc(sizeof(Sighting));  
 
     c = fscanf(file, "%s", name); 
-    struct observer_ *cond;
+    Observer *cond;
     cond = root_obs->observers;
 
     while(cond->next != NULL) {

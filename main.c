@@ -13,7 +13,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  struct observation_ *root_observation;
+  Observation *root_observation;
   
   FILE *sightings_file = fopen(args.sightings, "r");
   FILE *observers_file = fopen(args.observers, "r");
@@ -24,7 +24,7 @@ int main(int argc, char *argv[]) {
   root_observation->sightings = read_sightings(sightings_file, root_observation);
   fclose(sightings_file);
 
-  struct sighting_ *conductor;
+  Sighting *conductor;
   conductor = root_observation->sightings;
 
   printf("UID\t OLAT\t OLONG\t Type\t BGR\t Range\t CMLAT\t CMLONG\n");

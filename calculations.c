@@ -7,3 +7,7 @@ void find_position(struct sighting_ *sighting) {
   printf(" %.3lf\t", latitude);
   printf(" %.3lf\n", longitude);
 }
+
+void find_distance() {
+
+}

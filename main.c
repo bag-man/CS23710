@@ -3,7 +3,7 @@
 #include "definitions.h"
 #include "docopt/docopt.c"
 #include "read_files.c"
-#include "find_position.c"
+#include "calculations.c"
 
 int main(int argc, char *argv[]) {
 

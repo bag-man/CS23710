@@ -19,9 +19,9 @@ int main(int argc, char *argv[]) {
 
   root_observation = read_observations(observers_file);
   fclose(observers_file);
+
   read_sightings(sightings_file, root_observation);
   fclose(sightings_file);
 
   return 0;
 }
-

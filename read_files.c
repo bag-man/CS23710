@@ -73,9 +73,8 @@ struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
     cond = root_obs->observers;
 
     while(cond->next != NULL) {
-      if(name == cond->user_name) {
+      if(!strcmp(name, cond->user_name)) {
 	conductor->observer = cond;
-	printf(cond->user_name);  // This is never getting called. 
 	break;
       } else {
 	cond = cond->next;

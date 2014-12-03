@@ -23,4 +23,4 @@ typedef struct {
 } Observation;
 
 Observation * read_observations(FILE *file);
-Sighting * read_sightings(FILE *file, Observation *root_obs);
+Sighting * observation_read_signting(Observation *observation, FILE file);

@@ -8,7 +8,7 @@
 int main(int argc, char *argv[]) {
 
   DocoptArgs args = docopt(argc, argv, 1, "0.1");
-  if(!args.sightings && !args.observers) {
+  if(!args.sightings || !args.observers) {
     printf(" %s", args.help_message);
     return 1;
   }
@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   root_observation = read_observations(observers_file);
   fclose(observers_file);
 
-  root_observation->sightings = read_sightings(sightings_file, root_observation);
+  root_observation->sightings = observation_read_sightings(sightings_file, root_observation);
   fclose(sightings_file);
 
   Sighting *conductor;

@@ -75,6 +75,7 @@ struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
     while(cond->next != NULL) {
       if(name == cond->user_name) {
 	conductor->observer = cond;
+	printf(cond->user_name);  // This is never getting called. 
 	break;
       } else {
 	cond = cond->next;
@@ -95,12 +96,7 @@ struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
 
   /* Print for debug */
   while ( conductor->next != NULL ) {
-
-    struct observer_ *tmp;
-    tmp = conductor->observer;
-    printf("%s", tmp.user_name);
-    //printf("%s", conductor->observer->user_name); // This doesn't work. 
-
+    printf("%s", conductor->observer->user_name);
     printf(" %c", conductor->mamal);
     printf(" %lf", conductor->angle);
     printf(" %lf\n", conductor->distance);
@@ -108,6 +104,4 @@ struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
   }
 
   return *root;
-
 }
-

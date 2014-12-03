@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "definitions.h"
-#include "docopt/docopt.c"
+#include "../docopt/docopt.c"
 #include "read_files.c"
 #include "calculations.c"
 

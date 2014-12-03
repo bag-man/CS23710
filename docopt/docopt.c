@@ -8,6 +8,7 @@
 #include <stdbool.h>
 #include <string.h>
 #endif
+#pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
 
 typedef struct {

@@ -48,7 +48,8 @@ struct observation_ * read_observations(FILE *file) {
   }
 
   struct observation_ *observation;
-  observation->time = time; //Segfault
+  observation = malloc(sizeof(struct observation_));  
+  observation->time = time; 
   observation->observers = root;
   return observation; 
 }

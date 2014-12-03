@@ -25,4 +25,4 @@ struct sighting_ {
 };
 
 struct observation_ * read_observations(FILE *file);
-struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs);
+struct sighting_ * read_sightings(FILE *file, struct observation_ *root_obs);

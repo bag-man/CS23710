@@ -20,8 +20,21 @@ int main(int argc, char *argv[]) {
   root_observation = read_observations(observers_file);
   fclose(observers_file);
 
-  read_sightings(sightings_file, root_observation);
+  root_observation->sightings = read_sightings(sightings_file, root_observation);
   fclose(sightings_file);
+
+  struct sighting_ *conductor;
+  conductor = root_observation->sightings;
+
+  while ( conductor->next != NULL ) {
+    printf("%s", conductor->observer->user_name);
+    printf(" %.3lf", conductor->observer->latitude);
+    printf(" %.3lf", conductor->observer->longitude);
+    printf(" %c", conductor->mamal);
+    printf(" %.3lf", conductor->angle);
+    printf(" %.3lf\n", conductor->distance);
+    conductor = conductor->next;
+  }
 
   return 0;
 }

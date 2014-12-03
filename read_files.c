@@ -39,14 +39,6 @@ struct observation_ * read_observations(FILE *file) {
   } 
   conductor = root;
 
-  /* Print for debug */
-  while(conductor->next != NULL) {
-    printf("%s", conductor->user_name);
-    printf(" %lf", conductor->latitude);
-    printf(" %lf\n", conductor->longitude);
-    conductor = conductor->next;
-  }
-
   struct observation_ *observation;
   observation = malloc(sizeof(struct observation_));  
   observation->time = time; 
@@ -54,7 +46,7 @@ struct observation_ * read_observations(FILE *file) {
   return observation; 
 }
 
-struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
+struct sighting_ * read_sightings(FILE *file, struct observation_ *root_obs) {
 
   struct sighting_ *root;       
   struct sighting_ *conductor;  
@@ -93,14 +85,5 @@ struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
   } 
   conductor = root;
 
-  /* Print for debug */
-  while ( conductor->next != NULL ) {
-    printf("%s", conductor->observer->user_name);
-    printf(" %c", conductor->mamal);
-    printf(" %lf", conductor->angle);
-    printf(" %lf\n", conductor->distance);
-    conductor = conductor->next;
-  }
-
-  return *root;
+  return root;
 }

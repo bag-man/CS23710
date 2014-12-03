@@ -3,6 +3,7 @@
 #include "definitions.h"
 #include "docopt/docopt.c"
 #include "read_files.c"
+#include "find_position.c"
 
 int main(int argc, char *argv[]) {
 
@@ -26,14 +27,15 @@ int main(int argc, char *argv[]) {
   struct sighting_ *conductor;
   conductor = root_observation->sightings;
 
-  printf("UID\t OLAT\t OLONG\t Type\t Bearing\t Range\n");
+  printf("UID\t OLAT\t OLONG\t Type\t BGR\t Range\t CMLAT\t CMLONG\n");
   while ( conductor->next != NULL ) {
     printf("%s\t", conductor->observer->user_name);
     printf(" %.3lf\t", conductor->observer->latitude);
     printf(" %.3lf\t", conductor->observer->longitude);
     printf(" %c\t", conductor->mamal);
-    printf(" %.3lf\t", conductor->angle);
-    printf(" %.3lf\n", conductor->distance);
+    printf(" %.1lf\t", conductor->angle);
+    printf(" %.3lf\t", conductor->distance);
+    find_position(conductor);
     conductor = conductor->next;
   }
 

@@ -27,12 +27,13 @@ int main(int argc, char *argv[]) {
   Sighting *conductor;
   conductor = root_observation->sightings;
 
-  printf("%d-%d-%d %d:%d:%d\n", root_observation->time.tm_mday,
-			      root_observation->time.tm_mon,
-			      root_observation->time.tm_year,
-			      root_observation->time.tm_hour,
-			      root_observation->time.tm_min,
-			      root_observation->time.tm_sec
+  printf("%d-%d-%d %d:%d:%d\n", 
+    root_observation->time.tm_mday,
+    root_observation->time.tm_mon,
+    root_observation->time.tm_year,
+    root_observation->time.tm_hour,
+    root_observation->time.tm_min,
+    root_observation->time.tm_sec
   );
 
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");

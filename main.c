@@ -12,13 +12,15 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 
-  struct observation_ root_observation;
+  struct observation_ *root_observation;
   
   FILE *sightings_file = fopen(args.sightings, "r");
   FILE *observers_file = fopen(args.observers, "r");
 
   root_observation = read_observations(observers_file);
+  fclose(observers_file);
   read_sightings(sightings_file, root_observation);
+  fclose(sightings_file);
 
   return 0;
 }

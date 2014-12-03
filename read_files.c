@@ -1,9 +1,11 @@
-struct observation_ read_observations(FILE *file) {
+#define DATEVARS 6
+
+struct observation_ * read_observations(FILE *file) {
 
   /* Read Date */
-  int date[6];
+  int date[DATEVARS];
 
-  for(int i=0; i < 6; i++) {
+  for(int i=0; i < DATEVARS; i++) {
     fscanf(file, "%d", &date[i]); 
   }
   
@@ -45,15 +47,13 @@ struct observation_ read_observations(FILE *file) {
     conductor = conductor->next;
   }
 
-  fclose(file);
-
-  struct observation_ observation;
-  observation.time = time;
-  observation.observers = root;
+  struct observation_ *observation;
+  observation->time = time; //Segfault
+  observation->observers = root;
   return observation; 
 }
 
-struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
+struct sighting_ read_sightings(FILE *file, struct observation_ *root_obs) {
 
   struct sighting_ *root;       
   struct sighting_ *conductor;  
@@ -69,7 +69,7 @@ struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
 
     c = fscanf(file, "%s", name); 
     struct observer_ *cond;
-    cond = root_obs.observers;
+    cond = root_obs->observers;
 
     while(cond->next != NULL) {
       if(name == cond->user_name) {
@@ -101,7 +101,6 @@ struct sighting_ read_sightings(FILE *file, struct observation_ root_obs) {
     conductor = conductor->next;
   }
 
-  fclose(file);
   return *root;
 
 }

@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
   root_observation = read_observations(observers_file);
   fclose(observers_file);
 
-  root_observation->sightings = observation_read_sightings(sightings_file, root_observation);
+  root_observation->sightings = read_sightings(sightings_file, root_observation);
   fclose(sightings_file);
 
   Sighting *conductor;

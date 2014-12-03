@@ -46,7 +46,7 @@ Observation * read_observations(FILE *file) {
   return observation; 
 }
 
-Sighting * observation_read_sightings(FILE *file, Observation *root_obs) {
+Sighting * read_sightings(FILE *file, Observation *root_obs) {
 
   Sighting *root;       
   Sighting *conductor;  

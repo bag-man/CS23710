@@ -25,5 +25,5 @@ typedef struct {
 } Observation;
 
 Observation * read_observations(FILE *file);
-Sighting * observation_read_signting(Observation *observation, FILE file);
+Sighting * read_signting(Observation *observation, FILE file);
 void print_sighting(Sighting *conductor);

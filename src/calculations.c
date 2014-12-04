@@ -13,17 +13,18 @@ void find_duplicates(Sighting *sighting) {
   while(conductor->next != NULL) {
     Sighting *loop_conductor = conductor->next;
     while(loop_conductor != NULL) {
+      printf("here");
       if(
 	abs(conductor->location.lat - loop_conductor->location.lat) <= 0.02 && 
 	abs(conductor->location.lng - loop_conductor->location.lng) <= 0.02
       ) {
 	printf("These need to be within 0.02 to be a duplicate!\n");
 	printf("%.3lf : %.3lf\n", conductor->location.lng, loop_conductor->location.lng);
+	printf("%.3lf : %.3lf\n", conductor->location.lat, loop_conductor->location.lat);
       }
       loop_conductor = loop_conductor->next;
     }
+    loop_conductor = sighting;
     conductor = conductor->next;
   }
 } 
-
-

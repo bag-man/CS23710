@@ -37,13 +37,13 @@ int main(int argc, char *argv[]) {
   );
 
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
-  while ( conductor->next != NULL ) {
+  while(conductor->next != NULL) {
     find_position(conductor);
     print_sighting(conductor);
     conductor = conductor->next;
   }
 
-  //find_duplicates(root_observation->sightings);
+  find_duplicates(root_observation->sightings);
 
   return 0;
 }
@@ -55,7 +55,6 @@ void print_sighting(Sighting *conductor) {
  printf(" %c\t", conductor->type);
  printf(" %.1lf\t", conductor->bearing);
  printf(" %.3lf\t", conductor->range);
-
  printf(" %.3lf\t", conductor->location.lat);
  printf(" %.3lf\n", conductor->location.lng);
 }

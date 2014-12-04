@@ -20,7 +20,7 @@ Observation * read_observations(FILE *file) {
   conductor = root;
 
   char c = 0;
-  while (c != EOF) {
+  while(c != EOF) {
     conductor->next = malloc(sizeof(Observer));  
     c = fscanf(file, "%s", conductor->id); 
     c = fscanf(file, "%lf", &conductor->olat); 
@@ -51,7 +51,7 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
   char c = 0;
   char name[5];
 
-  while (c != EOF) {
+  while(c != EOF) {
     conductor->next = malloc(sizeof(Sighting));  
 
     c = fscanf(file, "%s", name); 

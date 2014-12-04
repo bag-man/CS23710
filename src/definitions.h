@@ -1,4 +1,6 @@
 #include <time.h>
+#include "navigation.h"
+#define Location location // So that Location structs can start with a capital L
 
 typedef struct Observer {
   char id[5];
@@ -7,17 +9,12 @@ typedef struct Observer {
   struct Observer *next; 
 } Observer;
 
-typedef struct Location {
-  double lat;
-  double lng;
-} Location;
-
 typedef struct Sighting {
   Observer *observer;
   char type;
   double bearing;
   double range;
-  struct Location location;
+  Location location;
   struct Sighting *next;
 } Sighting;
 

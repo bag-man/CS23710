@@ -1,6 +1,5 @@
 #include <math.h>
-#include "navigation.h"
-#define M_PI 3.14159265358979323846264338327 // Wasn't defined for some reason
+#define M_PI 3.14159265358979323846264338327 // Wasn't defined in math.h for some reason
 
 void find_position(Sighting *sighting) {
   double olatr = (sighting->observer->olat) * M_PI / 180.0; 
@@ -13,15 +12,10 @@ void find_duplicates(Sighting *sighting) {
   while(conductor->next != NULL) {
     Sighting *loop_conductor = conductor->next;
     while(loop_conductor != NULL) {
-      printf("here");
-      if(
-	abs(conductor->location.lat - loop_conductor->location.lat) <= 0.02 && 
-	abs(conductor->location.lng - loop_conductor->location.lng) <= 0.02
-      ) {
-	printf("These need to be within 0.02 to be a duplicate!\n");
-	printf("%.3lf : %.3lf\n", conductor->location.lng, loop_conductor->location.lng);
-	printf("%.3lf : %.3lf\n", conductor->location.lat, loop_conductor->location.lat);
-      }
+      double distance = great_circle(conductor->location, loop_conductor->location);
+      if(distance <= 0.02) {
+	printf("We have a duplicate!\n");
+      } 
       loop_conductor = loop_conductor->next;
     }
     loop_conductor = sighting;

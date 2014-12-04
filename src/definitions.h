@@ -17,8 +17,6 @@ typedef struct Sighting {
   char type;
   double bearing;
   double range;
-  double cmlat;
-  double cmlong;
   struct Location location;
   struct Sighting *next;
 } Sighting;

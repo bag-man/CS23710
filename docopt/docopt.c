@@ -35,7 +35,7 @@ const char help_message[] =
 "  -o FILE, --observer FILE	The file of observers information.\n"
 "  -s FILE, --sighting FILE	The file of sightings information.\n"
 "  -h --help     		Show this screen.\n"
-"  --version     		Show version.\n"
+"  -v --version     		Show version.\n"
 "";
 
 const char usage_pattern[] =
@@ -298,7 +298,7 @@ DocoptArgs docopt(int argc, char *argv[], bool help, const char *version) {
     };
     Option options[] = {
         {"-h", "--help", 0, 0, NULL},
-        {NULL, "--version", 0, 0, NULL},
+        {"-v", "--version", 0, 0, NULL},
         {"-o", "--observer", 1, 0, NULL},
         {"-s", "--sighting", 1, 0, NULL}
     };

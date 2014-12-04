@@ -1,21 +1,15 @@
-#define DATEVARS 6
 
 Observation * read_observations(FILE *file) {
 
-  /* Read Date */
-  int date[DATEVARS];
-
-  for(int i=0; i < DATEVARS; i++) {
-    fscanf(file, "%d", &date[i]); 
-  }
-  
   struct tm time;
-  time.tm_mday = date[0];
-  time.tm_mon  = date[1];
-  time.tm_year = date[2];
-  time.tm_hour = date[3];
-  time.tm_min  = date[4];
-  time.tm_sec  = date[5];
+  fscanf(file, "%d %d %d %d %d %d",
+    &time.tm_mday,
+    &time.tm_mon,
+    &time.tm_year,
+    &time.tm_hour,
+    &time.tm_min,
+    &time.tm_sec
+  );
 
   /* Read Records */
   Observer *root;       

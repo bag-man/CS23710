@@ -7,6 +7,11 @@ typedef struct Observer {
   struct Observer *next; 
 } Observer;
 
+typedef struct Location {
+  double lat;
+  double lng;
+} Location;
+
 typedef struct Sighting {
   Observer *observer;
   char type;
@@ -14,6 +19,7 @@ typedef struct Sighting {
   double range;
   double cmlat;
   double cmlong;
+  struct Location location;
   struct Sighting *next;
 } Sighting;
 

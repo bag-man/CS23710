@@ -43,6 +43,8 @@ int main(int argc, char *argv[]) {
     conductor = conductor->next;
   }
 
+  //find_duplicates(root_observation->sightings);
+
   return 0;
 }
 
@@ -53,6 +55,7 @@ void print_sighting(Sighting *conductor) {
  printf(" %c\t", conductor->type);
  printf(" %.1lf\t", conductor->bearing);
  printf(" %.3lf\t", conductor->range);
- printf(" %.3lf\t", conductor->cmlat);
- printf(" %.3lf\n", conductor->cmlong);
+
+ printf(" %.3lf\t", conductor->location.lat);
+ printf(" %.3lf\n", conductor->location.lng);
 }

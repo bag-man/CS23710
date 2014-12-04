@@ -9,22 +9,45 @@ void find_position(Sighting *sighting) {
 }
 
 void find_duplicates(Sighting *sighting) {
+
+  Observer *average_observer = malloc(sizeof(Observer));
+  strcpy(average_observer->id, "AVRG");
   Sighting *conductor = sighting;
+
   while(conductor->next != NULL) {
+
     Sighting *loop_conductor = conductor->next;
-    Sighting *tmp_conductor_list = conductor;
+    Sighting *tmp_conductor_root = conductor;
+    Sighting *tmp_conductor = tmp_conductor_root;
+
     while(loop_conductor != NULL) {
       if(conductor->type == loop_conductor->type) {
 	double distance = great_circle(conductor->location, loop_conductor->location);
 	if(distance <= PROXIMITY) {
 	  printf("We have a duplicate!\n");
 	  // Add duplicate to temp listt
-	  tmp_conductor_list->next = loop_conductor;
+	  tmp_conductor->next = loop_conductor;
+	  tmp_conductor = tmp_conductor->next;
 	} 
       }
       // Add Average of temp list to sightings list
-      Sighting *average_position;
-      average_position-> // How do I set an average observer!
+      Sighting *average_position = malloc(sizeof(Sighting));
+      average_position->observer = average_observer; 
+      tmp_conductor = tmp_conductor_root;
+      double avg_lat, avg_lng = 0;
+      int count = 0;
+      while(tmp_conductor != NULL) {
+	avg_lat += tmp_conductor->location.lat;
+	avg_lng += tmp_conductor->location.lng;
+	count++;
+	tmp_conductor = tmp_conductor->next;
+      }
+      avg_lat /= count;
+      avg_lng /= count;
+      average_position->location.lat = avg_lat;
+      average_position->location.lng = avg_lng;
+      print_sighting(average_position);
+
       loop_conductor = loop_conductor->next;
     }
     loop_conductor = sighting;

@@ -26,7 +26,7 @@ void find_duplicates(Sighting *sighting) {
 	if(distance <= PROXIMITY) {
 	  printf("We have a duplicate!\n");
 	  // Add duplicate to temp listt
-	  tmp_conductor->next = loop_conductor;
+	  tmp_conductor->next = loop_conductor; // segfault
 	  tmp_conductor = tmp_conductor->next;
 	} 
       }
@@ -46,7 +46,7 @@ void find_duplicates(Sighting *sighting) {
       avg_lng /= count;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
-      print_sighting(average_position);
+      //print_sighting(average_position);
 
       loop_conductor = loop_conductor->next;
     }

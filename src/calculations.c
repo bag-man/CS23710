@@ -5,8 +5,9 @@
 void find_position(Sighting *sighting) {
 
   double olatr = (sighting->observer->olat) * M_PI / 180.0; 
-  sighting->location.lat = sighting->observer->olat + (sighting->range * cos(sighting->bearing)) / 60.0;
-  sighting->location.lng = sighting->observer->olong + (sighting->range * sin(sighting->bearing) / cos(olatr)) / 60.0; 
+  double bgr = (sighting->bearing) * M_PI / 180.0; 
+  sighting->location.lat = sighting->observer->olat + (sighting->range * cos(bgr)) / 60.0;
+  sighting->location.lng = sighting->observer->olong + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
 
   if((sighting->location.lng < -4) || (sighting->location.lng > -5.5) || 
      (sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
@@ -32,16 +33,21 @@ void find_duplicates(Sighting *sighting, int count) {
     found[i] = 0;
   }
 
+  int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
       if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[i] == 0) {
 	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
 	if(distance <= PROXIMITY) {
-	  found[j] = 1;
-	  found[i] = 1;
+	  found[j] = identifier;
+	  found[i] = identifier;
+	  identifier++;
         }
       }
     }
+  }
+  for(int i = 0; i < count; i++) {
+    printf("%d\n",found[i]);
   }
 
   //This only works for one average

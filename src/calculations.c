@@ -41,40 +41,40 @@ void find_duplicates(Sighting *sighting, int count) {
 	if(distance <= PROXIMITY) {
 	  found[j] = identifier;
 	  found[i] = identifier;
-	  identifier++;
         }
       }
     }
-  }
-  for(int i = 0; i < count; i++) {
-    printf("%d\n",found[i]);
-  }
-
-  //This only works for one average
-  Observer *average_observer = malloc(sizeof(Observer));
-  strcpy(average_observer->id, "AVRG");
-
-  double avg_lat, avg_lng = 0;
-  int num_avg = 0;
-  char type;
-  for(int i = 0; i < count; i++) {
-    if(found[i] == 1) {
-      print_sighting(sighting_list[i]);
-      type = sighting_list[i]->type;
-      avg_lat += sighting_list[i]->location.lat;
-      avg_lng += sighting_list[i]->location.lng;
-      num_avg++;
+    for(int i = 0; i < count; i++) {
+      //printf("%d\n",found[i]);
     }
-  }
 
-  Sighting *average_position = malloc(sizeof(Sighting));
-  average_position->observer = average_observer;
-  average_position->type = type;
-  avg_lat /= num_avg;
-  avg_lng /= num_avg;
-  average_position->location.lat = avg_lat;
-  average_position->location.lng = avg_lng;
-  print_sighting(average_position);
+    //This only works for one average
+    Observer *average_observer = malloc(sizeof(Observer));
+    strcpy(average_observer->id, "AVRG");
+
+    double avg_lat, avg_lng = 0;
+    int num_avg = 0;
+    char type;
+    for(int i = 0; i < count; i++) {
+      if(found[i] == identifier) {
+	print_sighting(sighting_list[i]);
+	type = sighting_list[i]->type;
+	avg_lat += sighting_list[i]->location.lat;
+	avg_lng += sighting_list[i]->location.lng;
+	num_avg++;
+      }
+    }
+
+    Sighting *average_position = malloc(sizeof(Sighting));
+    average_position->observer = average_observer;
+    average_position->type = type;
+    avg_lat /= num_avg;
+    avg_lng /= num_avg;
+    average_position->location.lat = avg_lat;
+    average_position->location.lng = avg_lng;
+    print_sighting(average_position);
+    identifier++;
+  }
 }
 
 /*void find_duplicates(Sighting *sighting) {

@@ -48,7 +48,6 @@ void find_duplicates(Sighting *sighting, int count) {
       //printf("%d\n",found[i]);
     }
 
-    //This only works for one average
     Observer *average_observer = malloc(sizeof(Observer));
     strcpy(average_observer->id, "AVRG");
 
@@ -65,14 +64,16 @@ void find_duplicates(Sighting *sighting, int count) {
       }
     }
 
-    Sighting *average_position = malloc(sizeof(Sighting));
-    average_position->observer = average_observer;
-    average_position->type = type;
-    avg_lat /= num_avg;
-    avg_lng /= num_avg;
-    average_position->location.lat = avg_lat;
-    average_position->location.lng = avg_lng;
-    print_sighting(average_position);
+    if(found[i] == identifier) {
+      Sighting *average_position = malloc(sizeof(Sighting));
+      average_position->observer = average_observer;
+      average_position->type = type;
+      avg_lat /= num_avg;
+      avg_lng /= num_avg;
+      average_position->location.lat = avg_lat;
+      average_position->location.lng = avg_lng;
+      print_sighting(average_position);
+    }
     identifier++;
   }
 }

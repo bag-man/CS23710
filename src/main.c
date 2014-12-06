@@ -11,7 +11,8 @@ int main(int argc, char *argv[]) {
   if(!args.sighting || !args.observer) {
     printf(" %s", args.help_message);
     return 1;
-  }
+
+ }
 
   Observation *root_observation;
   

@@ -21,29 +21,27 @@ void find_duplicates(Sighting *sighting, int count) {
   Sighting *sighting_list[count];
 
   int i = 0;
+  int found[count];
   while(sighting->next != NULL) {
     sighting_list[i] = sighting;
-    i++;
     sighting = sighting->next;
-  } 
-
-  int found[count];
-  /* Initialise found array to 0 */
-  for(int i = 0; i < count; i++) {
     found[i] = 0;
-  }
+    i++;
+  } 
 
   int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
-      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[i] == 0) {
+      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type)) { // && found[i] == 0) {
 	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
 	if(distance <= PROXIMITY) {
-	  found[j] = identifier;
 	  found[i] = identifier;
+	  found[j] = identifier;
         }
       }
     }
+
+
     for(int i = 0; i < count; i++) {
       //printf("%d\n",found[i]);
     }
@@ -73,6 +71,7 @@ void find_duplicates(Sighting *sighting, int count) {
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
       print_sighting(average_position);
+      printf("\n");
     }
     identifier++;
   }

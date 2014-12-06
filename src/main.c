@@ -36,14 +36,16 @@ int main(int argc, char *argv[]) {
     root_observation->time.tm_sec
   );
 
+  int count = 0;
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while(conductor->next != NULL) {
     find_position(conductor);
     print_sighting(conductor);
     conductor = conductor->next;
+    count++;
   }
 
-  find_duplicates(root_observation->sightings);
+  find_duplicates(root_observation->sightings, count);
 
   return 0;
 

@@ -3,18 +3,63 @@
 #define M_PI 3.14159265358979323846264338327 // Wasn't defined in math.h for some reason
 
 void find_position(Sighting *sighting) {
+
   double olatr = (sighting->observer->olat) * M_PI / 180.0; 
   sighting->location.lat = sighting->observer->olat + (sighting->range * cos(sighting->bearing)) / 60.0;
   sighting->location.lng = sighting->observer->olong + (sighting->range * sin(sighting->bearing) / cos(olatr)) / 60.0; 
+
+  if((sighting->location.lng < -4) || (sighting->location.lng > -5.5) || 
+     (sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
+    //sighting = sighting->next;     // remove from list? does that work? No. No it doesn't I need a prev. :(
+  }
+
 }
 
-void find_duplicates(Sighting *sighting) {
+void find_duplicates(Sighting *sighting, int count) {
+  printf("\n");
+  Sighting *sighting_list[count];
+
+  int i = 0;
+  while(sighting->next != NULL) {
+    sighting_list[i] = sighting;
+    i++;
+    sighting = sighting->next;
+  } 
+
+  int found[count];
+  for(int i = 0; i < count; i++) {
+    found[i] = 0;
+  }
+
+  for(int i = 0; i < count; i++) {
+    for(int j = 0; j < count; j++) {
+      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[i] == 0) {
+	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
+	if(distance <= PROXIMITY) {
+	  //printf("We have a duplicate!\n");
+	  //print_sighting(sighting_list[j]);
+	  found[j] = 1;
+	  found[i] = 1;
+        }
+      }
+    }
+
+  }
+  printf("Duplicates:\n");
+  for(int i = 0; i < count; i++) {
+    if(found[i] == 1) {
+      print_sighting(sighting_list[i]);
+    }
+  }
+}
+
+/*void find_duplicates(Sighting *sighting) {
 
   Observer *average_observer = malloc(sizeof(Observer));
   strcpy(average_observer->id, "AVRG");
   Sighting *conductor = sighting;
 
-  while(conductor->next != NULL) {
+  while(conductor->next != NULL) { // Loop through sightings
 
     Sighting *loop_conductor = conductor->next;
     Sighting *tmp_conductor_root = conductor;
@@ -25,7 +70,7 @@ void find_duplicates(Sighting *sighting) {
 	double distance = great_circle(conductor->location, loop_conductor->location);
 	if(distance <= PROXIMITY) {
 	  printf("We have a duplicate!\n");
-	  // Add duplicate to temp listt
+	  // Add duplicate to temp list
 	  tmp_conductor->next = loop_conductor; // segfault
 	  tmp_conductor = tmp_conductor->next;
 	} 
@@ -40,6 +85,7 @@ void find_duplicates(Sighting *sighting) {
 	avg_lat += tmp_conductor->location.lat;
 	avg_lng += tmp_conductor->location.lng;
 	count++;
+	printf("%d\n", count);
 	tmp_conductor = tmp_conductor->next;
       }
       avg_lat /= count;
@@ -53,4 +99,4 @@ void find_duplicates(Sighting *sighting) {
     loop_conductor = sighting;
     conductor = conductor->next;
   }
-} 
+}  */

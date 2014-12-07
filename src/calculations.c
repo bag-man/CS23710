@@ -48,7 +48,8 @@ void find_duplicates(Sighting *sighting, int count) {
     Observer *average_observer = malloc(sizeof(Observer));
     strcpy(average_observer->id, "AVRG");
 
-    double avg_lat, avg_lng = 0;
+    double avg_lat = 0;
+    double avg_lng = 0;
     int num_avg = 0;
     char type;
     for(int i = 0; i < count; i++) {

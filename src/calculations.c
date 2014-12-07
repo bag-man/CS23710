@@ -11,7 +11,10 @@ void find_position(Sighting *sighting) {
 
   if((sighting->location.lng < -4) || (sighting->location.lng > -5.5) || 
      (sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
-    //sighting = sighting->next;     // remove from list? does that work? No. No it doesn't I need a prev. :(
+
+    printf("This code ran!\n");
+    sighting->prev->next = sighting->next;  
+
   }
 
 }

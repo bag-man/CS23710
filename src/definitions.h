@@ -16,6 +16,7 @@ typedef struct Sighting {
   double range;
   Location location;
   struct Sighting *next;
+  struct Sighting *prev;
 } Sighting;
 
 

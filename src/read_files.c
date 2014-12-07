@@ -1,4 +1,3 @@
-
 Observation * read_observations(FILE *file) {
 
   struct tm time;
@@ -53,6 +52,7 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
 
   while(c != EOF) {
     conductor->next = malloc(sizeof(Sighting));  
+    conductor->next->prev = conductor;
 
     c = fscanf(file, "%s", name); 
     Observer *cond;

@@ -71,6 +71,10 @@ void find_duplicates(Sighting *sighting, int count) {
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
       average_position->visible = 1;
+      while(sighting->next != NULL) {
+	sighting = sighting->next;
+      }
+      sighting->next = average_position;
       print_sighting(average_position);
       printf("\n");
     }

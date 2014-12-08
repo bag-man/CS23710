@@ -46,7 +46,16 @@ int main(int argc, char *argv[]) {
     count++;
   }
 
+  /* print averages */
   find_duplicates(root_observation->sightings, count);
+
+  /* print updated list with averages */
+  conductor = root_observation->sightings;
+  while(conductor->next != NULL) {
+    print_sighting(conductor);
+    conductor = conductor->next;
+  }
+
 
   return 0;
 

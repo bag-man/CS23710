@@ -45,7 +45,7 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
   Sighting *conductor;  
 
   root = malloc(sizeof(Sighting));  
-  root->next = NULL; 
+  root->prev = root; 
   conductor = root;
   char c = 0;
   char name[5];

@@ -9,13 +9,14 @@ void find_position(Sighting *sighting) {
   sighting->location.lat = sighting->observer->olat + (sighting->range * cos(bgr)) / 60.0;
   sighting->location.lng = sighting->observer->olong + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
 
-  if((sighting->location.lng < -4) || (sighting->location.lng > -5.5) || 
+  // Check if sighting is within area. This is not working currently. 
+  /*if((sighting->location.lng < -4) || (sighting->location.lng > -5.5) || 
      (sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
 
     printf("This code ran!\n");
     sighting->prev->next = sighting->next;  
 
-  }
+  } */
 
 }
 

@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
   );
 
   int count = 0;
+  printf("\nRaw data\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while(conductor->next != NULL) {
     find_position(conductor);
@@ -47,8 +48,12 @@ int main(int argc, char *argv[]) {
   }
 
   /* print averages */
+  printf("\nAverages\n");
+  printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG");
   find_duplicates(root_observation->sightings, count);
 
+  printf("\nRaw data + Averages\n");
+  printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   /* print updated list with averages */
   conductor = root_observation->sightings;
   while(conductor->next != NULL) {

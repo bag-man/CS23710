@@ -40,9 +40,8 @@ int main(int argc, char *argv[]) {
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while(conductor->next != NULL) {
     find_position(conductor);
-    if(conductor->visible) {
-      print_sighting(conductor);
-    }
+    find_in_area(conductor);
+    print_sighting(conductor);
     conductor = conductor->next;
     count++;
   }
@@ -55,13 +54,15 @@ int main(int argc, char *argv[]) {
 
 void print_sighting(Sighting *conductor) {
 
-  printf("%s\t", conductor->observer->id);
-  printf(" %.3lf\t", conductor->observer->olat);
-  printf(" %.3lf\t", conductor->observer->olong);
-  printf(" %c\t", conductor->type);
-  printf(" %.1lf\t", conductor->bearing);
-  printf(" %.3lf\t", conductor->range);
-  printf(" %.3lf\t", conductor->location.lat);
-  printf(" %.3lf\n", conductor->location.lng);
+  if(conductor->visible) {
+    printf("%s\t", conductor->observer->id);
+    printf(" %.3lf\t", conductor->observer->olat);
+    printf(" %.3lf\t", conductor->observer->olong);
+    printf(" %c\t", conductor->type);
+    printf(" %.1lf\t", conductor->bearing);
+    printf(" %.3lf\t", conductor->range);
+    printf(" %.3lf\t", conductor->location.lat);
+    printf(" %.3lf\n", conductor->location.lng);
+  }
 
 }

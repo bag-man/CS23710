@@ -2,13 +2,7 @@
 #define PROXIMITY 0.02
 #define M_PI 3.14159265358979323846264338327 // Wasn't defined in math.h for some reason
 
-void find_position(Sighting *sighting) {
-
-  double olatr = (sighting->observer->olat) * M_PI / 180.0; 
-  double bgr = (sighting->bearing) * M_PI / 180.0; 
-  sighting->location.lat = sighting->observer->olat + (sighting->range * cos(bgr)) / 60.0;
-  sighting->location.lng = sighting->observer->olong + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
-
+void find_in_area(Sighting *sighting) {
   if((sighting->location.lng > -4) || (sighting->location.lng < -5.5)){
     sighting->visible = 0;  
   } else if((sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
@@ -16,7 +10,13 @@ void find_position(Sighting *sighting) {
   } else {
     sighting->visible = 1;  
   }
+}
 
+void find_position(Sighting *sighting) {
+  double olatr = (sighting->observer->olat) * M_PI / 180.0; 
+  double bgr = (sighting->bearing) * M_PI / 180.0; 
+  sighting->location.lat = sighting->observer->olat + (sighting->range * cos(bgr)) / 60.0;
+  sighting->location.lng = sighting->observer->olong + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
 }
 
 void find_duplicates(Sighting *sighting, int count) {
@@ -70,7 +70,7 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
-      printf("\n");
+      print_sighting(average_position);
     }
     identifier++;
   }

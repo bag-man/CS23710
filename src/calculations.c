@@ -36,7 +36,7 @@ void find_duplicates(Sighting *sighting, int count) {
   int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
-      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0) {
+      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 && sighting_list[i]->visible && sighting_list[j]->visible) {
 	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
 	if(distance <= PROXIMITY) {
 	  found[i] = identifier;
@@ -70,7 +70,9 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
+      average_position->visible = 1;
       print_sighting(average_position);
+      printf("\n");
     }
     identifier++;
   }

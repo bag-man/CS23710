@@ -45,14 +45,12 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
   Sighting *conductor;  
 
   root = malloc(sizeof(Sighting));  
-  root->prev = root; 
   conductor = root;
   char c = 0;
   char name[5];
 
   while(c != EOF) {
     conductor->next = malloc(sizeof(Sighting));  
-    conductor->next->prev = conductor;
 
     c = fscanf(file, "%s", name); 
     Observer *cond;

@@ -11,8 +11,7 @@ int main(int argc, char *argv[]) {
   if(!args.sighting || !args.observer) {
     printf(" %s", args.help_message);
     return 1;
-
- }
+  }
 
   Observation *root_observation;
   
@@ -41,7 +40,9 @@ int main(int argc, char *argv[]) {
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while(conductor->next != NULL) {
     find_position(conductor);
-    print_sighting(conductor);
+    if(conductor->visible) {
+      print_sighting(conductor);
+    }
     conductor = conductor->next;
     count++;
   }

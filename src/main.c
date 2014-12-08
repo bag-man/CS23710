@@ -68,15 +68,17 @@ int main(int argc, char *argv[]) {
 
 void print_sighting(Sighting *conductor) {
 
-  if(conductor->visible) {
-    printf("%s\t", conductor->observer->id);
+  //if(conductor->visible) {
+    printf(" %p\t", conductor);
+    printf(" %s\t", conductor->observer->id);
     printf(" %.3lf\t", conductor->observer->olat);
     printf(" %.3lf\t", conductor->observer->olong);
     printf(" %c\t", conductor->type);
     printf(" %.1lf\t", conductor->bearing);
     printf(" %.3lf\t", conductor->range);
     printf(" %.3lf\t", conductor->location.lat);
-    printf(" %.3lf\n", conductor->location.lng);
-  }
+    printf(" %.3lf\t", conductor->location.lng);
+    printf(" %p\n", conductor->next);
+  //}
 
 }

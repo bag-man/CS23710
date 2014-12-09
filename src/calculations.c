@@ -30,11 +30,12 @@ void remove_sighting(Sighting *sighting) {
 }
 
 void find_duplicates(Sighting *sighting, int count) {
-  printf("\n"); // If this is removed I get a segfault
+
   Sighting *sighting_list[count];
 
   int i = 0;
   int found[count];
+
   /* Create Array of pointers, is this bad form? */
   while(sighting->next != NULL) {
     sighting_list[i] = sighting;
@@ -42,6 +43,8 @@ void find_duplicates(Sighting *sighting, int count) {
     found[i] = 0;
     i++;
   } 
+
+  count = i;
 
   int identifier = 1;
   for(int i = 0; i < count; i++) {

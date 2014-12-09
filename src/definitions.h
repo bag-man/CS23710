@@ -16,7 +16,6 @@ typedef struct Sighting {
   Location location;
   struct Sighting *next;
   struct Sighting *prev;
-  //int visible;
 } Sighting;
 
 
@@ -26,6 +25,16 @@ typedef struct {
   Sighting *sightings;
 } Observation;
 
+/* main.c */
+Observation * get_observation();
+void print_sightings_list();
+void print_sighting(Sighting *conductor);
+
+/* read_files.c */
 Observation * read_observations(FILE *file);
 Sighting * read_signting(Observation *observation, FILE file);
-void print_sighting(Sighting *conductor);
+
+/* calculations.c */
+void find_position(Sighting *sighting); 
+void find_in_area(Sighting *sighting);
+void remove_sighting(Sighting *sighting);

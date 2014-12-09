@@ -54,12 +54,13 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
   conductor = root;
   char c = 0;
   char name[5];
+  conductor->prev = NULL;
 
   while(c != EOF) {
     conductor->next = malloc(sizeof(Sighting));  
 
     c = fscanf(file, "%s", name); 
-    Observer *cond;
+    Observer *cond; // For looping through observers
     cond = root_obs->observers;
 
     /* Find the sightings observer */
@@ -79,7 +80,9 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
     ); 
 
     if(c != EOF) {
+      Sighting *prev_conductor = conductor;
       conductor = conductor->next; 
+      conductor->prev = prev_conductor;
     } else { 
       conductor->next = NULL;
     }

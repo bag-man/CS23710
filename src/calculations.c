@@ -2,23 +2,31 @@
 #define PROXIMITY 0.02
 #define M_PI 3.14159265358979323846264338327 // Wasn't defined in math.h for some reason
 
-/* This is a bit of a hack, it should really remove the element from the linked list instead of just toggling visibility */
-void find_in_area(Sighting *sighting) {
-  if((sighting->location.lng > -4) || (sighting->location.lng < -5.5)){
-    sighting->visible = 0;  
-  } else if((sighting->location.lat > 52.833) || (sighting->location.lat < 52)) {
-    sighting->visible = 0;  
-  } else {
-    sighting->visible = 1;  
-  }
-}
-
 /* Calculate the animals position, this works fine */
 void find_position(Sighting *sighting) {
   double olatr = (sighting->observer->location.lat) * M_PI / 180.0; 
   double bgr = (sighting->bearing) * M_PI / 180.0; 
   sighting->location.lat = sighting->observer->location.lat + (sighting->range * cos(bgr)) / 60.0;
   sighting->location.lng = sighting->observer->location.lng + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
+}
+
+/* Test if sighting is in our area */
+void find_in_area(Sighting *sighting) {
+  if((sighting->location.lng > -4) || (sighting->location.lng < -5.5))
+    remove_sighting(sighting);
+  else if((sighting->location.lat > 52.833) || (sighting->location.lat < 52)) 
+    remove_sighting(sighting);
+}
+
+/* remove sighting from linked list */
+void remove_sighting(Sighting *sighting) {
+  if(sighting->prev == NULL) {
+    Observation *observation = get_observation();
+    observation->sightings = sighting->next;
+    observation->sightings->prev = NULL;
+  } else {
+    sighting->prev->next = sighting->next;
+  }
 }
 
 /* This function is a mess and needs sorting out */
@@ -39,7 +47,7 @@ void find_duplicates(Sighting *sighting, int count) {
   int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
-      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 && sighting_list[i]->visible && sighting_list[j]->visible) {
+      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 ) { 
 	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
 	if(distance <= PROXIMITY) {
 	  found[i] = identifier;
@@ -74,9 +82,6 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
-      average_position->visible = 1;
-      //sighting->next = average_position; // This doesn't work
-      //sighting = sighting->next;         // Neither does this	 	
       print_sighting(average_position);
       printf("\n");
     }

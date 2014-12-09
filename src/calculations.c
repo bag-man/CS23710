@@ -44,6 +44,7 @@ void find_duplicates(Sighting *sighting, int count) {
     i++;
   } 
 
+  // seems like count is wrong
   count = i;
 
   int identifier = 1;

@@ -19,6 +19,10 @@ int main(int argc, char *argv[]) {
   /* Read in file */
   FILE *sightings_file = fopen(args.sighting, "r");
   FILE *observers_file = fopen(args.observer, "r");
+  if(!observers_file || !sightings_file) {
+    printf("File path invalid\n");
+    return 1;
+  }
 
   observation = read_observations(observers_file);
   fclose(observers_file);

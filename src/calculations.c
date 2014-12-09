@@ -30,7 +30,7 @@ void remove_sighting(Sighting *sighting) {
 }
 
 void find_duplicates(Sighting *sighting, int count) {
-  printf("\n"); // If this is removed I get a segfault
+  //printf("\n"); // If this is removed I get a segfault
   Sighting *sighting_list[count];
 
   int i = 0;

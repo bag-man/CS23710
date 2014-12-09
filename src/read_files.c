@@ -21,9 +21,11 @@ Observation * read_observations(FILE *file) {
   char c = 0;
   while(c != EOF) {
     conductor->next = malloc(sizeof(Observer));  
-    c = fscanf(file, "%s", conductor->id); 
-    c = fscanf(file, "%lf", &conductor->olat); 
-    c = fscanf(file, "%lf", &conductor->olong); 
+    c = fscanf(file, "%s %lf %lf", 
+      conductor->id,
+      &conductor->olat,
+      &conductor->olong
+    ); 
     if(c != EOF) {
       conductor = conductor->next; 
     } else { 
@@ -37,6 +39,7 @@ Observation * read_observations(FILE *file) {
   observation->time = time; 
   observation->observers = root;
   return observation; 
+
 }
 
 Sighting * read_sightings(FILE *file, Observation *root_obs) {
@@ -65,9 +68,11 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
       }
     }
 
-    c = fscanf(file, " %c", &conductor->type); 
-    c = fscanf(file, "%lf", &conductor->bearing); 
-    c = fscanf(file, "%lf", &conductor->range); 
+    c = fscanf(file, " %c %lf %lf",
+      &conductor->type, 
+      &conductor->bearing, 
+      &conductor->range
+    ); 
 
     if(c != EOF) {
       conductor = conductor->next; 
@@ -78,4 +83,5 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
   conductor = root;
 
   return root;
+
 }

@@ -50,26 +50,25 @@ int main(int argc, char *argv[]) {
   /* print averages */
   printf("\nAverages\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG");
+
   find_duplicates(root_observation->sightings, count);
 
-  /*printf("\nRaw data + Averages\n");
+  printf("\nRaw data + Averages\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   conductor = root_observation->sightings;
   while(conductor->next != NULL) {
     print_sighting(conductor);
     conductor = conductor->next;
   }
-  */
-
-
+  
   return 0;
 
 }
 
 void print_sighting(Sighting *conductor) {
 
-  if(conductor->visible) {
-    //printf(" %p\t", conductor);
+  //if(conductor->visible) {
+    printf(" %p\t", conductor);
     printf(" %s\t", conductor->observer->id);
     printf(" %.3lf\t", conductor->observer->olat);
     printf(" %.3lf\t", conductor->observer->olong);
@@ -77,8 +76,8 @@ void print_sighting(Sighting *conductor) {
     printf(" %.1lf\t", conductor->bearing);
     printf(" %.3lf\t", conductor->range);
     printf(" %.3lf\t", conductor->location.lat);
-    printf(" %.3lf\n", conductor->location.lng);
-    //printf(" %p\n", conductor->next);
-  }
+    printf(" %.3lf\t", conductor->location.lng);
+    printf(" %p\n", conductor->next);
+  //}
 
 }

@@ -24,8 +24,8 @@ Observation * read_observations(FILE *file) {
     conductor->next = malloc(sizeof(Observer));  
     c = fscanf(file, "%s %lf %lf", 
       conductor->id,
-      &conductor->olat,
-      &conductor->olong
+      &conductor->location.lat,
+      &conductor->location.lng
     ); 
     if(c != EOF) {
       conductor = conductor->next; 

@@ -74,8 +74,8 @@ void print_sighting(Sighting *conductor) {
   //if(conductor->visible) {
     printf(" %p\t", conductor);
     printf(" %s\t", conductor->observer->id);
-    printf(" %.3lf\t", conductor->observer->olat);
-    printf(" %.3lf\t", conductor->observer->olong);
+    printf(" %.3lf\t", conductor->observer->location.lat);
+    printf(" %.3lf\t", conductor->observer->location.lng);
     printf(" %c\t", conductor->type);
     printf(" %.1lf\t", conductor->bearing);
     printf(" %.3lf\t", conductor->range);

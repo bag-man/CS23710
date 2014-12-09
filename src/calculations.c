@@ -15,10 +15,10 @@ void find_in_area(Sighting *sighting) {
 
 /* Calculate the animals position, this works fine */
 void find_position(Sighting *sighting) {
-  double olatr = (sighting->observer->olat) * M_PI / 180.0; 
+  double olatr = (sighting->observer->location.lat) * M_PI / 180.0; 
   double bgr = (sighting->bearing) * M_PI / 180.0; 
-  sighting->location.lat = sighting->observer->olat + (sighting->range * cos(bgr)) / 60.0;
-  sighting->location.lng = sighting->observer->olong + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
+  sighting->location.lat = sighting->observer->location.lat + (sighting->range * cos(bgr)) / 60.0;
+  sighting->location.lng = sighting->observer->location.lng + (sighting->range * sin(bgr) / cos(olatr)) / 60.0; 
 }
 
 /* This function is a mess and needs sorting out */

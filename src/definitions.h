@@ -4,8 +4,7 @@
 
 typedef struct Observer {
   char id[5];
-  double olat;
-  double olong;
+  Location location;
   struct Observer *next; 
 } Observer;
 
@@ -16,7 +15,8 @@ typedef struct Sighting {
   double range;
   Location location;
   struct Sighting *next;
-  int visible;
+  struct Sighting *prev;
+  //int visible;
 } Sighting;
 
 

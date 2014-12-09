@@ -1,5 +1,6 @@
 Observation * read_observations(FILE *file) {
 
+  /* Read the first lines time string */
   struct tm time;
   fscanf(file, "%d %d %d %d %d %d",
     &time.tm_mday,
@@ -34,6 +35,7 @@ Observation * read_observations(FILE *file) {
   } 
   conductor = root;
 
+  /* Create observation struct to put the root pointer to the list in */
   Observation *observation;
   observation = malloc(sizeof(Observation));  
   observation->time = time; 
@@ -44,6 +46,7 @@ Observation * read_observations(FILE *file) {
 
 Sighting * read_sightings(FILE *file, Observation *root_obs) {
 
+  /* Read in the sightings */
   Sighting *root;       
   Sighting *conductor;  
 
@@ -59,6 +62,7 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
     Observer *cond;
     cond = root_obs->observers;
 
+    /* Find the sightings observer */
     while(cond->next != NULL) {
       if(!strcmp(name, cond->id)) {
 	conductor->observer = cond;

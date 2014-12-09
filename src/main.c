@@ -7,36 +7,40 @@
 
 int main(int argc, char *argv[]) {
 
+  /* Docopt command line usage */
   DocoptArgs args = docopt(argc, argv, 1, "0.1");
   if(!args.sighting || !args.observer) {
     printf(" %s", args.help_message);
     return 1;
   }
 
-  Observation *root_observation;
+  /* Create observation by reading the files */
+  Observation *observation;
   
   FILE *sightings_file = fopen(args.sighting, "r");
   FILE *observers_file = fopen(args.observer, "r");
 
-  root_observation = read_observations(observers_file);
+  observation = read_observations(observers_file);
   fclose(observers_file);
 
-  root_observation->sightings = read_sightings(sightings_file, root_observation);
+  observation->sightings = read_sightings(sightings_file, observation);
   fclose(sightings_file);
 
-  Sighting *conductor;
-  conductor = root_observation->sightings;
-
+  /* Print out the date */
   printf("%d-%d-%d %d:%d:%.2d\n", 
-    root_observation->time.tm_mday,
-    root_observation->time.tm_mon,
-    root_observation->time.tm_year,
-    root_observation->time.tm_hour,
-    root_observation->time.tm_min,
-    root_observation->time.tm_sec
+    observation->time.tm_mday,
+    observation->time.tm_mon,
+    observation->time.tm_year,
+    observation->time.tm_hour,
+    observation->time.tm_min,
+    observation->time.tm_sec
   );
 
-  int count = 0;
+  /* Calculate positions, find if in area, then print out */
+  Sighting *conductor;
+  conductor = observation->sightings;
+
+  //int count = 0;
   printf("\nRaw data\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   while(conductor->next != NULL) {
@@ -44,18 +48,18 @@ int main(int argc, char *argv[]) {
     find_in_area(conductor);
     print_sighting(conductor);
     conductor = conductor->next;
-    count++;
+    //count++;
   }
 
   /* print averages */
   printf("\nAverages\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG");
 
-  find_duplicates(root_observation->sightings, count);
+  //find_duplicates(observation->sightings, count);
 
   printf("\nRaw data + Averages\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
-  conductor = root_observation->sightings;
+  conductor = observation->sightings;
   while(conductor->next != NULL) {
     print_sighting(conductor);
     conductor = conductor->next;

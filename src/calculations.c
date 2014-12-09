@@ -29,7 +29,6 @@ void remove_sighting(Sighting *sighting) {
   }
 }
 
-/* This function is a mess and needs sorting out */
 void find_duplicates(Sighting *sighting, int count) {
   printf("\n");
   Sighting *sighting_list[count];

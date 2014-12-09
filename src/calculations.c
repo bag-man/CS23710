@@ -30,7 +30,7 @@ void remove_sighting(Sighting *sighting) {
 }
 
 void find_duplicates(Sighting *sighting, int count) {
-  //printf("\n");
+  printf("\n"); // If this is removed I get a segfault
   Sighting *sighting_list[count];
 
   int i = 0;
@@ -64,7 +64,6 @@ void find_duplicates(Sighting *sighting, int count) {
     char type;
     for(int i = 0; i < count; i++) {
       if(found[i] == identifier) {
-	//print_sighting(sighting_list[i]);
 	type = sighting_list[i]->type;
 	avg_lat += sighting_list[i]->location.lat;
 	avg_lng += sighting_list[i]->location.lng;
@@ -81,8 +80,6 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
-      //print_sighting(average_position);
-      //printf("\n");
     }
     identifier++;
   }

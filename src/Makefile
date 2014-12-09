@@ -3,3 +3,6 @@ main:
 
 clean:
 	rm main
+
+test: main
+	./main -s ../data/sightings_4.txt -o ../data/observers_4.txt

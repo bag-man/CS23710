@@ -24,13 +24,12 @@ void remove_sighting(Sighting *sighting) {
     Observation *observation = get_observation();
     observation->sightings = sighting->next;
     observation->sightings->prev = NULL;
+  } else if(sighting->next == NULL) {
+    sighting->prev->next = NULL;
+    // Need to update the whole list here
   } else {
     sighting->prev->next = sighting->next;
   }
-  // Need to make last value in list NULL 
-  /*else if(sighting->next->next == NULL) {
-    sighting->prev->next = NULL;
-  }*/ 
 }
 
 void add_sighting(Sighting *sighting) {

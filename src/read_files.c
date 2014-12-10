@@ -80,11 +80,12 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
 
     if(c != EOF) {
       Sighting *prev_conductor = conductor;
+      print_sighting(conductor);
       conductor = conductor->next; 
       conductor->prev = prev_conductor;
     } else { 
       conductor->next = NULL;
-      print_sighting(conductor); // This ->next is null on CB07 jump to main.c:33
+      print_sighting(conductor);
     }
   } 
 

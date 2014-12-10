@@ -29,10 +29,9 @@ int main(int argc, char *argv[]) {
 
   observation->sightings = read_sightings(sightings_file, observation);
   fclose(sightings_file);
-  
-  print_sightings_list(); //CB07's->next is now not null
+  print_sightings_list();
 
-  /* Print out the date */
+  /* Print out the date 
   printf("%d-%d-%d %d:%d:%.2d\n", 
     observation->time.tm_mday,
     observation->time.tm_mon,
@@ -40,7 +39,7 @@ int main(int argc, char *argv[]) {
     observation->time.tm_hour,
     observation->time.tm_min,
     observation->time.tm_sec
-  );
+  ); */
 
   /* Calculate positions, find if in area, then print out */
   Sighting *conductor;
@@ -53,11 +52,12 @@ int main(int argc, char *argv[]) {
     conductor = conductor->next;
   }
 
-  print_sightings_list();
+  /*print_sightings_list();
 
   find_duplicates(observation->sightings);
 
   print_sightings_list();
+  */
 
   return 0;
 

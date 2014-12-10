@@ -38,3 +38,4 @@ Sighting * read_signting(Observation *observation, FILE file);
 void find_position(Sighting *sighting); 
 void find_in_area(Sighting *sighting);
 void remove_sighting(Sighting *sighting);
+void find_duplicates(Sighting *sighting);

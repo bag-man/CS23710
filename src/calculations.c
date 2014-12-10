@@ -36,9 +36,13 @@ void add_sighting(Sighting *sighting) {
   Observation *observation = get_observation();
   Sighting *conductor = observation->sightings;
   while(conductor != NULL) {
-    conductor = conductor->next;
+    if(conductor->next == NULL) {
+      break;
+    } else {
+      conductor = conductor->next;
+    }
   }
-  conductor->prev->next = sighting; // Conductor is null
+  conductor->next = sighting; // Conductor is null
   sighting->prev = conductor;
   sighting->next = NULL; 
 }

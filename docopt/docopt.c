@@ -10,6 +10,7 @@
 #endif
 #pragma GCC diagnostic ignored "-Wunused-but-set-variable"
 
+
 typedef struct {
     /* options without arguments */
     int help;
@@ -36,6 +37,11 @@ const char help_message[] =
 "  -s FILE, --sighting FILE	The file of sightings information.\n"
 "  -h --help     		Show this screen.\n"
 "  -v --version     		Show version.\n"
+"\n"
+"Legend:\n"
+"  A = Averaged \n"
+"  D = Dolphin\n"
+"  P = Porpoise\n"
 "";
 
 const char usage_pattern[] =

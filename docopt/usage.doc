@@ -11,3 +11,8 @@ Options:
   -s FILE, --sighting FILE	The file of sightings information.
   -h --help     		Show this screen.
   -v --version     		Show version.
+
+Legend:
+  A = Averaged 
+  D = Dolphin
+  P = Porpoise

@@ -5,4 +5,4 @@ clean:
 	rm main
 
 test: main
-	./main -s ../data/sightings_4.txt -o ../data/observers_4.txt
+	./main -s ../data/sightings_5.txt -o ../data/observers_5.txt

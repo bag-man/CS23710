@@ -29,7 +29,6 @@ int main(int argc, char *argv[]) {
 
   observation->sightings = read_sightings(sightings_file, observation);
   fclose(sightings_file);
-  print_sightings_list();
 
   /* Print out the date 
   printf("%d-%d-%d %d:%d:%.2d\n", 
@@ -46,18 +45,18 @@ int main(int argc, char *argv[]) {
   conductor = observation->sightings;
 
   /* Calculate positions, and remove mamals not in area */
-  while(conductor->next != NULL) {
+  while(conductor != NULL) {
     find_position(conductor);
     find_in_area(conductor);
     conductor = conductor->next;
   }
 
-  /*print_sightings_list();
+  print_sightings_list();
 
   find_duplicates(observation->sightings);
 
   print_sightings_list();
-  */
+  
 
   return 0;
 
@@ -73,7 +72,7 @@ void print_sightings_list() {
   printf("\nSightings\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   conductor = observation->sightings;
-  while(conductor->next != NULL) {
+  while(conductor != NULL) {
     print_sighting(conductor);
     conductor = conductor->next;
   }
@@ -81,8 +80,8 @@ void print_sightings_list() {
 
 void print_sighting(Sighting *conductor) {
 
-  printf(" %p\t", conductor->prev);
-  printf(" %p\t", conductor);
+  //printf(" %p\t", conductor->prev);
+  //printf(" %p\t", conductor);
   printf(" %s\t", conductor->observer->id);
   printf(" %.3lf\t", conductor->observer->location.lat);
   printf(" %.3lf\t", conductor->observer->location.lng);
@@ -90,7 +89,7 @@ void print_sighting(Sighting *conductor) {
   printf(" %.1lf\t", conductor->bearing);
   printf(" %.3lf\t", conductor->range);
   printf(" %.3lf\t", conductor->location.lat);
-  printf(" %.3lf\t", conductor->location.lng);
-  printf(" %p\n", conductor->next);
+  printf(" %.3lf\n", conductor->location.lng);
+  //printf(" %p\n", conductor->next);
 
 }

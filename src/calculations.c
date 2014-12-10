@@ -35,11 +35,12 @@ void remove_sighting(Sighting *sighting) {
 void add_sighting(Sighting *sighting) {
   Observation *observation = get_observation();
   Sighting *conductor = observation->sightings;
-  while(conductor->next != NULL) {
+  while(conductor != NULL) {
     conductor = conductor->next;
   }
+  conductor->prev->next = sighting; // Conductor is null
   sighting->prev = conductor;
-  conductor->next = sighting; 
+  sighting->next = NULL; 
 }
 
 void find_duplicates(Sighting *sighting) {
@@ -47,7 +48,7 @@ void find_duplicates(Sighting *sighting) {
   int i = 0;
   /* Create Array of pointers, is this bad form? */
   Sighting *counter = sighting;
-  while(counter->next != NULL) {
+  while(counter != NULL) {
     i++;
     counter = counter->next;
   } 
@@ -55,7 +56,7 @@ void find_duplicates(Sighting *sighting) {
   Sighting *sighting_list[i];
 
   int y = 0;
-  while(sighting->next != NULL) {
+  while(sighting != NULL) {
     sighting_list[y] = sighting;
     sighting = sighting->next;
     y++;

@@ -79,10 +79,10 @@ void find_duplicates(Sighting *sighting) {
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
       if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 ) { // Test different mamal, same species, not found
-	double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
-	if(distance <= PROXIMITY) {
-	  found[i] = identifier;
-	  found[j] = identifier;
+        double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
+        if(distance <= PROXIMITY) {
+          found[i] = identifier;
+          found[j] = identifier;
         }
       }
     }
@@ -98,11 +98,11 @@ void find_duplicates(Sighting *sighting) {
     for(int i = 0; i < count; i++) {
       /* Calculate average totals */
       if(found[i] == identifier) {
-	type = sighting_list[i]->type;
-	avg_lat += sighting_list[i]->location.lat;
-	avg_lng += sighting_list[i]->location.lng;
-	sighting_list[i]->type = 'A';
-	num_avg++;
+type = sighting_list[i]->type;
+avg_lat += sighting_list[i]->location.lat;
+avg_lng += sighting_list[i]->location.lng;
+sighting_list[i]->type = 'A';
+num_avg++;
       }
     }
 

@@ -65,10 +65,10 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
     /* Find the sightings observer */
     while(cond->next != NULL) {
       if(!strcmp(name, cond->id)) {
-	conductor->observer = cond;
-	break;
+        conductor->observer = cond;
+        break;
       } else {
-	cond = cond->next;
+        cond = cond->next;
       }
     }
 

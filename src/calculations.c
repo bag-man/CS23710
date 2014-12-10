@@ -30,6 +30,7 @@ void remove_sighting(Sighting *sighting) {
 }
 
 void add_sighting(Sighting *sighting) {
+  print_sighting(sighting);
   Observation *observation = get_observation();
   Sighting *conductor = observation->sightings;
   while(conductor->next != NULL) {
@@ -37,23 +38,34 @@ void add_sighting(Sighting *sighting) {
     conductor = conductor->next;
   }
   conductor->next = sighting; // Something weird is happening here
+  print_sighting(conductor->next);
 }
 
-void find_duplicates(Sighting *sighting, int count) {
-  Sighting *sighting_list[count];
+void find_duplicates(Sighting *sighting) {
 
   int i = 0;
-  int found[count];
-
   /* Create Array of pointers, is this bad form? */
-  while(sighting->next != NULL) {
-    sighting_list[i] = sighting;
-    sighting = sighting->next;
-    found[i] = 0;
+  Sighting *counter = sighting;
+  while(counter->next != NULL) {
     i++;
+    counter = counter->next;
   } 
 
-  count = i;
+  Sighting *sighting_list[i];
+
+  int y = 0;
+  while(sighting->next != NULL) {
+    sighting_list[y] = sighting;
+    sighting = sighting->next;
+    y++;
+  }
+
+  int found[i];
+  for(int x = 0; x < i; x++) {
+    found[x] = 0;
+  }
+
+  int count = i;
   int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
@@ -91,7 +103,6 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
-      print_sighting(average_position);
       add_sighting(average_position);
     }
     identifier++;

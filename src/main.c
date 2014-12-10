@@ -45,17 +45,15 @@ int main(int argc, char *argv[]) {
   conductor = observation->sightings;
 
   /* Calculate positions, and remove mamals not in area */
-  int count = 0;
   while(conductor->next != NULL) {
     find_position(conductor);
     find_in_area(conductor);
     conductor = conductor->next;
-    count++;
   }
 
   print_sightings_list();
 
-  find_duplicates(observation->sightings, count);
+  find_duplicates(observation->sightings);
 
   print_sightings_list();
 

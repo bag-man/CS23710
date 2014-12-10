@@ -29,12 +29,22 @@ void remove_sighting(Sighting *sighting) {
   }
 }
 
+void add_sighting(Sighting *sighting) {
+  Observation *observation = get_observation();
+  Sighting *conductor = observation->sightings;
+  while(conductor->next != NULL) {
+    print_sighting(conductor);
+    conductor = conductor->next;
+  }
+  conductor->next = sighting; // Something weird is happening here
+}
+
 void find_duplicates(Sighting *sighting, int count) {
-  //printf("\n"); // If this is removed I get a segfault
   Sighting *sighting_list[count];
 
   int i = 0;
   int found[count];
+
   /* Create Array of pointers, is this bad form? */
   while(sighting->next != NULL) {
     sighting_list[i] = sighting;
@@ -43,6 +53,7 @@ void find_duplicates(Sighting *sighting, int count) {
     i++;
   } 
 
+  count = i;
   int identifier = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
@@ -80,6 +91,8 @@ void find_duplicates(Sighting *sighting, int count) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
+      print_sighting(average_position);
+      add_sighting(average_position);
     }
     identifier++;
   }

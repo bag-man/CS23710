@@ -33,7 +33,6 @@ Observation * read_observations(FILE *file) {
       conductor->next = NULL;
     }
   } 
-  conductor = root;
 
   /* Create observation struct to put the root pointer to the list in */
   Observation *observation;
@@ -85,9 +84,9 @@ Sighting * read_sightings(FILE *file, Observation *root_obs) {
       conductor->prev = prev_conductor;
     } else { 
       conductor->next = NULL;
+      print_sighting(conductor); // This ->next is null on CB07 jump to main.c:33
     }
   } 
-  conductor = root;
 
   return root;
 

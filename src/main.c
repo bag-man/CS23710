@@ -29,6 +29,8 @@ int main(int argc, char *argv[]) {
 
   observation->sightings = read_sightings(sightings_file, observation);
   fclose(sightings_file);
+  
+  print_sightings_list(); //CB07's->next is now not null
 
   /* Print out the date */
   printf("%d-%d-%d %d:%d:%.2d\n", 
@@ -79,8 +81,8 @@ void print_sightings_list() {
 
 void print_sighting(Sighting *conductor) {
 
-  //printf(" %p\t", conductor->prev);
-  //printf(" %p\t", conductor);
+  printf(" %p\t", conductor->prev);
+  printf(" %p\t", conductor);
   printf(" %s\t", conductor->observer->id);
   printf(" %.3lf\t", conductor->observer->location.lat);
   printf(" %.3lf\t", conductor->observer->location.lng);
@@ -88,7 +90,7 @@ void print_sighting(Sighting *conductor) {
   printf(" %.1lf\t", conductor->bearing);
   printf(" %.3lf\t", conductor->range);
   printf(" %.3lf\t", conductor->location.lat);
-  printf(" %.3lf\n", conductor->location.lng);
-  //printf(" %p\n", conductor->next);
+  printf(" %.3lf\t", conductor->location.lng);
+  printf(" %p\n", conductor->next);
 
 }

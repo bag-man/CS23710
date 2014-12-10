@@ -26,9 +26,9 @@ void remove_sighting(Sighting *sighting) {
     observation->sightings->prev = NULL;
   } else if(sighting->next == NULL) {
     sighting->prev->next = NULL;
-    // Need to update the whole list here
   } else {
     sighting->prev->next = sighting->next;
+    sighting->next->prev = sighting->prev;
   }
 }
 

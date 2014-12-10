@@ -98,11 +98,11 @@ void find_duplicates(Sighting *sighting) {
     for(int i = 0; i < count; i++) {
       /* Calculate average totals */
       if(found[i] == identifier) {
-type = sighting_list[i]->type;
-avg_lat += sighting_list[i]->location.lat;
-avg_lng += sighting_list[i]->location.lng;
-sighting_list[i]->type = 'A';
-num_avg++;
+        type = sighting_list[i]->type;
+        avg_lat += sighting_list[i]->location.lat;
+        avg_lng += sighting_list[i]->location.lng;
+        sighting_list[i]->type = 'A';
+        num_avg++;
       }
     }
 

@@ -27,18 +27,20 @@ void remove_sighting(Sighting *sighting) {
   } else {
     sighting->prev->next = sighting->next;
   }
+  // Need to make last value in list NULL 
+  /*else if(sighting->next->next == NULL) {
+    sighting->prev->next = NULL;
+  }*/ 
 }
 
 void add_sighting(Sighting *sighting) {
-  print_sighting(sighting);
   Observation *observation = get_observation();
   Sighting *conductor = observation->sightings;
   while(conductor->next != NULL) {
-    print_sighting(conductor);
     conductor = conductor->next;
   }
-  conductor->next = sighting; // Something weird is happening here
-  print_sighting(conductor->next);
+  sighting->prev = conductor;
+  conductor->next = sighting; 
 }
 
 void find_duplicates(Sighting *sighting) {
@@ -103,6 +105,7 @@ void find_duplicates(Sighting *sighting) {
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
       average_position->location.lng = avg_lng;
+      average_position->next = NULL;
       add_sighting(average_position);
     }
     identifier++;

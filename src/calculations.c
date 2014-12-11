@@ -77,6 +77,7 @@ void find_duplicates(Sighting *sighting) {
 
   int count = i; // Total number of mamals
   int identifier = 1;
+  int average_number = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
       if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 ) { // Test different mamal, same species, not found
@@ -87,9 +88,6 @@ void find_duplicates(Sighting *sighting) {
         }
       }
     }
-
-    Observer *average_observer = malloc(sizeof(Observer));
-    strcpy(average_observer->id, "AVRG"); // Create a dummy observer
 
     double avg_lat = 0;
     double avg_lng = 0;
@@ -109,9 +107,17 @@ void find_duplicates(Sighting *sighting) {
 
     /* Create and add the average sighting */
     if(found[i] == identifier) {
+      Observer *average_observer = malloc(sizeof(Observer));
+      char name[5];
+      sprintf(name, "AVR%d", average_number); // puts string into buffer
+      strcpy(average_observer->id, name); // Create a dummy observer
+      average_number++;
+
       Sighting *average_position = malloc(sizeof(Sighting));
       average_position->observer = average_observer;
       average_position->type = type;
+      average_position->observer->location.lat = 0;
+      average_position->observer->location.lng = 0;
       avg_lat /= num_avg;
       avg_lng /= num_avg;
       average_position->location.lat = avg_lat;
@@ -130,8 +136,6 @@ void find_pods(Sighting *sighting) {
   int i = 0;
   Sighting *counter = sighting;
 
-  //printf("%p  %p\n", sighting, counter); //THEY ARE EQUAL!!
-
   while(counter != NULL) {
     if(counter->type != 'A'){
       i++;
@@ -145,7 +149,7 @@ void find_pods(Sighting *sighting) {
   Sighting *sighting_list[i];
   int y = 0;
   while(sighting != NULL) {
-    if(sighting->type != 'A') { // This is cheating, they should be removed on line 139
+    if(sighting->type != 'A') { // This is cheating, they should be removed above
       sighting_list[y] = sighting;
       y++;
     }
@@ -159,7 +163,6 @@ void find_pods(Sighting *sighting) {
   }
 
   /* we now have sighting_list of pointers, and found of 0's */
-
   int count = i; // Total number of mamals
   int identifier = 1;
   for(int i = 0; i < count; i++) {
@@ -169,6 +172,7 @@ void find_pods(Sighting *sighting) {
         if(distance <= POD_RANGE) {
           found[i] = identifier;
           found[j] = identifier;
+          printf("%d %d\n", i, j); // Debug print pod arrays
         }
       }
     }
@@ -177,17 +181,20 @@ void find_pods(Sighting *sighting) {
 
   identifier = 1;
   int pod_num = 1;
-  for(int x = 0; x < i; x++) {
-    int z = x;
+  for(int x = 0; x < count; x++) {
     if(identifier == found[x]) {
       printf("POD %d\n", pod_num);
       pod_num++;
+        printf("==========\n");
+        printf("%d ", identifier);
+        printf("%s\n", sighting_list[identifier]->observer->id);
+        printf("==========\n");
+      for(int z = 0; z < count; z++) {
+        if(identifier == found[z]) { 
+          print_sighting(sighting_list[z]);
+        }
+      }
     }
-    while(identifier == found[x]) { 
-      print_sighting(sighting_list[x]);
-      x++;
-    }
-    x = z;
     identifier++;
   }
 }

@@ -43,8 +43,8 @@ int main(int argc, char *argv[]) {
   Sighting *conductor;
   conductor = observation->sightings;
 
-  printf("Raw data\n");
-  print_sightings_list();
+  //printf("Raw data\n");
+  //print_sightings_list();
 
   /* Calculate positions, and remove mamals not in area */
   while(conductor != NULL) {

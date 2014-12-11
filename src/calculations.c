@@ -129,6 +129,9 @@ void find_pods(Sighting *sighting) {
   /* Count the number of sightings */
   int i = 0;
   Sighting *counter = sighting;
+
+  //printf("%p  %p\n", sighting, counter); //THEY ARE EQUAL!!
+
   while(counter != NULL) {
     if(counter->type != 'A'){
       i++;
@@ -142,8 +145,10 @@ void find_pods(Sighting *sighting) {
   Sighting *sighting_list[i];
   int y = 0;
   while(sighting != NULL) {
-    sighting_list[y] = sighting;
-    y++;
+    if(sighting->type != 'A') { // This is cheating, they should be removed on line 139
+      sighting_list[y] = sighting;
+      y++;
+    }
     sighting = sighting->next;
   }
 
@@ -167,22 +172,22 @@ void find_pods(Sighting *sighting) {
         }
       }
     }
-  }
-  for(int x = 0; x < i; x++) {
-    printf("%d\n", found[x]);
+    identifier++;
   }
 
+  identifier = 1;
   int pod_num = 1;
   for(int x = 0; x < i; x++) {
-    if(found[x] != 0) {
+    int z = x;
+    if(identifier == found[x]) {
       printf("POD %d\n", pod_num);
       pod_num++;
-      for(int y = 0; y < i; y++) {
-        if(y == x) {
-          print_sighting(sighting_list[y]);
-        }
-      }
     }
-    x++;
+    while(identifier == found[x]) { 
+      print_sighting(sighting_list[x]);
+      x++;
+    }
+    x = z;
+    identifier++;
   }
 }

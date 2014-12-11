@@ -18,11 +18,6 @@ typedef struct Sighting {
   struct Sighting *prev;
 } Sighting;
 
-typedef struct Pod {
-  Sighting *members;
-  Location avg_location;
-} Pod;
-
 typedef struct {
   struct tm time;
   Observer *observers;

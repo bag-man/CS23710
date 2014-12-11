@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
   fclose(sightings_file);
 
   /* Print out the date */
-  printf("%d-%d-%d %d:%d:%.2d\n", 
+  printf("%d-%d-%d %d:%d:%.2d\n\n", 
     observation->time.tm_mday,
     observation->time.tm_mon,
     observation->time.tm_year,
@@ -40,9 +40,11 @@ int main(int argc, char *argv[]) {
     observation->time.tm_sec
   ); 
 
-  /* Calculate positions, find if in area, then print out */
   Sighting *conductor;
   conductor = observation->sightings;
+
+  printf("Raw data\n");
+  print_sightings_list();
 
   /* Calculate positions, and remove mamals not in area */
   while(conductor != NULL) {
@@ -53,9 +55,12 @@ int main(int argc, char *argv[]) {
 
   /* Calculate the averages */
   find_duplicates(observation->sightings);
+
+  printf("Duplicates marked, averages calculated, removed out of area sightings\n");
   print_sightings_list();
 
-  //find_pods(observation->sightings);
+  printf("Pods found\n");
+  find_pods(observation->sightings);
 
   return 0;
 
@@ -68,13 +73,13 @@ Observation * get_observation() {
 void print_sightings_list() {
   Sighting *conductor;
   conductor = observation->sightings;
-  printf("\nSightings\n");
   printf("UID\t OLAT\t OLONG\t TYPE\t BEARNG\t RANGE\t CMLAT\t CMLONG\n");
   conductor = observation->sightings;
   while(conductor != NULL) {
     print_sighting(conductor);
     conductor = conductor->next;
   }
+  printf("\n");
 } 
 
 void print_sighting(Sighting *conductor) {

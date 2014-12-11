@@ -168,6 +168,9 @@ void find_pods(Sighting *sighting) {
       }
     }
   }
+  for(int x = 0; x < i; x++) {
+    printf("%d\n", found[x]);
+  }
 
   int pod_num = 1;
   for(int x = 0; x < i; x++) {

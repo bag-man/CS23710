@@ -109,7 +109,7 @@ void find_duplicates(Sighting *sighting) {
     if(found[i] == identifier) {
       Observer *average_observer = malloc(sizeof(Observer));
       char name[5];
-      sprintf(name, "AV%d", average_number); // puts string into buffer
+      sprintf(name, "AVG%d", average_number); 
       strcpy(average_observer->id, name); // Create a dummy observer
       average_number++;
 
@@ -179,7 +179,6 @@ void find_pods(Sighting *sighting) {
           print_sighting(sighting_list[j]);
           found[i] = identifier;
           found[j] = identifier;
-          //printf("%d %d\n", i, j); // Debug print pod arrays */
         }
       }
     }

@@ -43,9 +43,6 @@ int main(int argc, char *argv[]) {
   Sighting *conductor;
   conductor = observation->sightings;
 
-  //printf("Raw data\n");
-  //print_sightings_list();
-
   /* Calculate positions, and remove mamals not in area */
   while(conductor != NULL) {
     find_position(conductor);
@@ -53,12 +50,24 @@ int main(int argc, char *argv[]) {
     conductor = conductor->next;
   }
 
+  printf("Mission 1: Data read in and positions found\n");
+  print_sightings_list();
+
+  printf("\nPress enter to continue\n");
+  char enter = 0;
+  while (enter != '\r' && enter != '\n') { enter = getchar(); }
+
   /* Calculate the averages */
   find_duplicates(observation->sightings);
 
-  printf("Duplicates marked, averages calculated, removed out of area sightings\n");
+  printf("Mission 2: Duplicates marked, averages calculated\n");
   print_sightings_list();
 
+  printf("\nPress enter to continue\n");
+  enter = 0;
+  while (enter != '\r' && enter != '\n') { enter = getchar(); }
+
+  printf("Mission 3: Pods detected\n");
   printf("Pods found\n");
   find_pods(observation->sightings);
 

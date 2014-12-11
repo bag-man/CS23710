@@ -109,7 +109,7 @@ void find_duplicates(Sighting *sighting) {
     if(found[i] == identifier) {
       Observer *average_observer = malloc(sizeof(Observer));
       char name[5];
-      sprintf(name, "AVR%d", average_number); // puts string into buffer
+      sprintf(name, "AV%d", average_number); // puts string into buffer
       strcpy(average_observer->id, name); // Create a dummy observer
       average_number++;
 
@@ -165,33 +165,21 @@ void find_pods(Sighting *sighting) {
   /* we now have sighting_list of pointers, and found of 0's */
   int count = i; // Total number of mamals
   int identifier = 1;
+  int pod_num = 1;
   for(int i = 0; i < count; i++) {
     for(int j = 0; j < count; j++) {
       if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 ) {
         double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
         if(distance <= POD_RANGE) {
+          if(found[i] != identifier) {
+            printf("POD %d\n", pod_num);
+            print_sighting(sighting_list[i]);
+            pod_num++;
+          }
+          print_sighting(sighting_list[j]);
           found[i] = identifier;
           found[j] = identifier;
-          printf("%d %d\n", i, j); // Debug print pod arrays
-        }
-      }
-    }
-    identifier++;
-  }
-
-  identifier = 1;
-  int pod_num = 1;
-  for(int x = 0; x < count; x++) {
-    if(identifier == found[x]) {
-      printf("POD %d\n", pod_num);
-      pod_num++;
-        printf("==========\n");
-        printf("%d ", identifier);
-        printf("%s\n", sighting_list[identifier]->observer->id);
-        printf("==========\n");
-      for(int z = 0; z < count; z++) {
-        if(identifier == found[z]) { 
-          print_sighting(sighting_list[z]);
+          //printf("%d %d\n", i, j); // Debug print pod arrays */
         }
       }
     }

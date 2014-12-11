@@ -54,7 +54,8 @@ int main(int argc, char *argv[]) {
   /* Calculate the averages */
   find_duplicates(observation->sightings);
 
-  print_sightings_list();
+  find_pods(observation->sightings);
+
   return 0;
 
 }

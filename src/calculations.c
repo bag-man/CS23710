@@ -1,5 +1,6 @@
 #include <math.h>
 #define PROXIMITY 0.02
+#define POD_RANGE 0.1
 #define M_PI 3.14159265358979323846264338327 // Wasn't defined in math.h for some reason
 
 /* Calculate the animals position, this works fine */
@@ -119,5 +120,66 @@ void find_duplicates(Sighting *sighting) {
       add_sighting(average_position);
     }
     identifier++;
+  }
+}
+
+/* Find pods */
+void find_pods(Sighting *sighting) {
+
+  /* Count the number of sightings */
+  int i = 0;
+  Sighting *counter = sighting;
+  while(counter != NULL) {
+    if(counter->type != 'A'){
+      i++;
+    } else {
+      remove_sighting(counter); // Remove Duplicates
+    }
+    counter = counter->next;
+  } 
+
+  /* Create an array of pointers of the sightings */
+  Sighting *sighting_list[i];
+  int y = 0;
+  while(sighting != NULL) {
+    sighting_list[y] = sighting;
+    y++;
+    sighting = sighting->next;
+  }
+
+  /* Create and initialise an array to 0 */
+  int found[i]; 
+  for(int x = 0; x < i; x++) {
+    found[x] = 0;
+  }
+
+  /* we now have sighting_list of pointers, and found of 0's */
+
+  int count = i; // Total number of mamals
+  int identifier = 1;
+  for(int i = 0; i < count; i++) {
+    for(int j = 0; j < count; j++) {
+      if((i != j) && (sighting_list[i]->type == sighting_list[j]->type) && found[j] == 0 ) {
+        double distance = great_circle(sighting_list[i]->location, sighting_list[j]->location);
+        if(distance <= POD_RANGE) {
+          found[i] = identifier;
+          found[j] = identifier;
+        }
+      }
+    }
+  }
+
+  int pod_num = 1;
+  for(int x = 0; x < i; x++) {
+    if(found[x] != 0) {
+      printf("POD %d\n", pod_num);
+      pod_num++;
+      for(int y = 0; y < i; y++) {
+        if(y == x) {
+          print_sighting(sighting_list[y]);
+        }
+      }
+    }
+    x++;
   }
 }

@@ -53,7 +53,7 @@ int main(int argc, char *argv[]) {
   printf("Mission 1: Data read in and positions found\n");
   print_sightings_list();
 
-  printf("\nPress enter to continue\n");
+  printf("\nPress enter for the next mission\n");
   char enter = 0;
   while (enter != '\r' && enter != '\n') { enter = getchar(); }
 
@@ -63,7 +63,7 @@ int main(int argc, char *argv[]) {
   printf("Mission 2: Duplicates marked, averages calculated\n");
   print_sightings_list();
 
-  printf("\nPress enter to continue\n");
+  printf("\nPress enter for the next mission\n");
   enter = 0;
   while (enter != '\r' && enter != '\n') { enter = getchar(); }
 

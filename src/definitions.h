@@ -1,3 +1,5 @@
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
 #include <time.h>
 #include "navigation.h"
 #define Location location // So that Location structs can start with a capital L
@@ -38,3 +40,5 @@ void find_position(Sighting *sighting);
 void find_in_area(Sighting *sighting);
 void remove_sighting(Sighting *sighting);
 void find_duplicates(Sighting *sighting);
+
+#endif
